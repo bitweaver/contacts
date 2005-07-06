@@ -1,5 +1,5 @@
 <div class="navbar">
-	<a href="{$gBitLoc.SAMPLE_PKG_URL}edit.php?content_id={$contactInfo.content_id}">{tr}edit{/tr}</a>
+	<a href="{$gBitLoc.CONTACTS_PKG_URL}edit.php?content_id={$contactInfo.content_id}">{tr}edit{/tr}</a>
 	{if $show_page eq 'y'}
 		{if $gBitSystemPrefs.feature_sample_attachments eq 'y'}
 			{if $gBitUser->hasPermission('bit_p_sample_view_attachments') or $gBitUser->hasPermission('bit_p_sample_admin_attachments') or $gBitUser->hasPermission('bit_p_sample_attach_files')}
