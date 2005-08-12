@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.1 2005/07/06 10:41:50 bitweaver Exp $
+// $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.1.1.1.2.1 2005/08/12 11:38:54 wolff_borg Exp $
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -78,8 +78,8 @@ if (isset($_REQUEST["fSavePage"])) {
 	// Check if all Request values are delivered, and if not, set them
 	// to avoid error messages. This can happen if some features are
 	// disabled
-	$cat_type='contact page';
-	$cat_objid = $gContact->mContactId;
+	$cat_obj_type=BITCONTACT_CONTENT_TYPE_GUID;
+	$cat_objid = $gContent->mContentId;
 	$cat_desc = ($feature_wiki_description == 'y') ? substr($_REQUEST["description"],0,200) : '';
 	$cat_name = $gContact->mContactId;
 	$cat_href = CONTACTS_PKG_URL."index.php?content_id=".$cat_objid;
@@ -90,8 +90,8 @@ if (isset($_REQUEST["fSavePage"])) {
 		$smarty->assign_by_ref( 'errors', $gContact->mErrors );	
 	}
 }
-$cat_type = 'contact page';
-$cat_objid = $gContact->mContactId;
+$cat_obj_type=BITCONTACT_CONTENT_TYPE_GUID;
+$cat_objid = $gContent->mContentId;
 
 // WYSIWYG and Quicktag variable
 $smarty->assign( 'textarea_id', 'editcontact' );
