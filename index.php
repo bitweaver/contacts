@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_contacts/index.php,v 1.2 2006/01/16 15:09:20 lsces Exp $
+ * $Header: /cvsroot/bitweaver/_bit_contacts/index.php,v 1.3 2006/01/16 15:29:13 lsces Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,11 +15,11 @@
  */
 require_once( '../bit_setup_inc.php' );
 
-include_once( CONTACT_PKG_PATH.'Contacts.php' );
+include_once( CONTACTS_PKG_PATH.'Contacts.php' );
 
 $gBitSystem->isPackageActive('contacts', TRUE);
 
-$gContent = new Contact();
+$gContent = new Contacts();
 
 if( !empty( $_REQUEST['content_id'] ) ) {
 	$gContent->load($_REQUEST['content_id']);
@@ -45,7 +45,7 @@ if ( $gContent->isValid() ) {
 	$gBitSystem->setBrowserTitle("Incident Reports Item");
 	$gBitSystem->display( 'bitpackage:contacts/show_contact_item.tpl');
 } else {
-	header ("location: ".CONTACT_PKG_URL."list.php");
+	header ("location: ".CONTACTS_PKG_URL."list.php");
 	die;
 }
 ?>

@@ -18,10 +18,10 @@
 		{include file="bitpackage:stickies/display_bitsticky.tpl"}
 	{/if}
 
-	{include file="bitpackage:contact/page_display.tpl"}
+	{include file="bitpackage:contacts/page_display.tpl"}
 
 	{if $print_page ne 'y'}
-		{include file="bitpackage:contact/page_action_bar.tpl"}
+		{include file="bitpackage:contacts/page_action_bar.tpl"}
 	{/if}
 </div>
 {if $comments_at_top_of_page ne 'y' and $print_page ne 'y'}

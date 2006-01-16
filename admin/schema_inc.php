@@ -62,24 +62,24 @@ $gBitInstaller->registerSchemaIndexes( CONTACTS_PKG_NAME, $indices );
 // ### Defaults
 
 // ### Default User Permissions
-$gBitInstaller->registerUserPermissions( CONTACT_PKG_NAME, array(
-	array('bit_p_view_contact', 'Can browse the Contacts List', 'basic', CONTACT_PKG_NAME),
-	array('bit_p_edit_contact', 'Can edit the Contacts List', 'registered', CONTACT_PKG_NAME),
-	array('bit_p_contact_admin', 'Can admin Contacts List', 'admin', 'contacts'),
-	array('bit_p_remove_contact', 'Can remove Contact entry', 'editors', 'contacts')
+$gBitInstaller->registerUserPermissions( CONTACTS_PKG_NAME, array(
+	array('bit_p_view_contact', 'Can browse the Contacts List', 'basic', CONTACTS_PKG_NAME),
+	array('bit_p_edit_contact', 'Can edit the Contacts List', 'registered', CONTACTS_PKG_NAME),
+	array('bit_p_CONTACTS_admin', 'Can admin Contacts List', 'admin', 'contacts'),
+	array('bit_p_remove_contact', 'Can remove a Contact entry', 'editors', 'contacts')
 ) );
 
 // ### Default Preferences
-$gBitInstaller->registerPreferences( CONTACT_PKG_NAME, array(
-	array( CONTACTS_PKG_NAME, 'contact_default_ordering','title_desc'),
-	array( CONTACTS_PKG_NAME, 'contact_left_created','y'),
-	array( CONTACT_PKG_NAME, 'contact_list_lastmodif','y'),
-	array( CONTACT_PKG_NAME, 'contact_list_notes','y'),
-	array( CONTACT_PKG_NAME, 'contact_list_title','y'),
-	array( CONTACT_PKG_NAME, 'contact_list_user','y'),
+$gBitInstaller->registerPreferences( CONTACTS_PKG_NAME, array(
+	array( CONTACTS_PKG_NAME, 'contacts_default_ordering','title_desc'),
+	array( CONTACTS_PKG_NAME, 'contacts_list_created','y'),
+	array( CONTACTS_PKG_NAME, 'contacts_list_lastmodif','y'),
+	array( CONTACTS_PKG_NAME, 'contacts_list_notes','y'),
+	array( CONTACTS_PKG_NAME, 'contacts_list_title','y'),
+	array( CONTACTS_PKG_NAME, 'contacts_list_user','y'),
 ) );
 
-$gBitInstaller->registerSchemaDefault( CONTACT_PKG_NAME, array(
+$gBitInstaller->registerSchemaDefault( CONTACTS_PKG_NAME, array(
 "INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (0, 'Personal')",
 "INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (1, 'Business')",
 "INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (2, 'Manufacturer')",

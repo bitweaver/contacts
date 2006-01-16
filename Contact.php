@@ -17,7 +17,7 @@ require_once( LIBERTY_PKG_PATH.'LibertyAttachable.php' );		// Contact base class
 /**
  * @package contact
  */
-class Contact extends LibertyAttachable {
+class Contacts extends LibertyAttachable {
 	var $mContactId;
 
 	/**
@@ -27,19 +27,19 @@ class Contact extends LibertyAttachable {
 	 * @param integer Contact Id identifer
 	 * @param integer Base content_id identifier 
 	 */
-	function Contact( $pContactId = NULL, $pContentId = NULL ) {
+	function Contacts( $pContactId = NULL, $pContentId = NULL ) {
 		LibertyContent::LibertyContent();
-		$this->registerContentType( CONTACT_CONTENT_TYPE_GUID, array(
-				'content_type_guid' => CONTACT_CONTENT_TYPE_GUID,
+		$this->registerContentType( CONTACTS_CONTENT_TYPE_GUID, array(
+				'content_type_guid' => CONTACTS_CONTENT_TYPE_GUID,
 				'content_description' => 'Contact Entry',
-				'handler_class' => 'Contact',
-				'handler_package' => 'contact',
-				'handler_file' => 'Contact.php',
+				'handler_class' => 'Contacts',
+				'handler_package' => 'contacts',
+				'handler_file' => 'Contacts.php',
 				'maintainer_url' => 'http://www.lsces.co.uk'
 			) );
 		$this->mContactId = (int)$pContactId;
 		$this->mContentId = (int)$pContentId;
-		$this->mContentTypeGuid = CONTACT_CONTENT_TYPE_GUID;
+		$this->mContentTypeGuid = CONTACTS_CONTENT_TYPE_GUID;
 	}
 
 	/**
@@ -200,7 +200,7 @@ class Contact extends LibertyAttachable {
 			$pContentId = $this->mContentId;
 		}
 
-		return CONTACT_PKG_URL.'index.php?content_id='.$pContentId;
+		return CONTACTS_PKG_URL.'index.php?content_id='.$pContentId;
 	}
 
 	/**
@@ -216,7 +216,7 @@ class Contact extends LibertyAttachable {
 		if (empty($this->mInfo['content_id']) ) {
 			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'.$aux['title'].'</a>';
 		} else {
-			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'."Contact-".$this->mInfo['title'].'</a>';
+			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'."Contact - ".$this->mInfo['title'].'</a>';
 		}
 		return $ret;
 	}
@@ -239,7 +239,7 @@ class Contact extends LibertyAttachable {
 		}
 
 		if( !empty( $pHash['title'] ) ) {
-			$ret = "Contact -".$this->mInfo['title'];
+			$ret = "Contact - ".$this->mInfo['title'];
 		} elseif( !empty( $pHash['content_description'] ) ) {
 			$ret = $pHash['content_description'];
 		}
@@ -305,7 +305,7 @@ class Contact extends LibertyAttachable {
 	*
 	* @return array List of contact type names from the contact mamanger in alphabetical order
 	*/
-	function getContactTypeList() {
+	function getContactsTypeList() {
 		$query = "SELECT `type_name` FROM `bit_contact_type`
 				  $mid ORDER BY `type_name`";
 		$result = $this->mDb->query($query);

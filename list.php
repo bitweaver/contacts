@@ -15,13 +15,13 @@
  */
 require_once( '../bit_setup_inc.php' );
 
-include_once( CONTACT_PKG_PATH.'Contact.php' );
+include_once( CONTACTS_PKG_PATH.'Contacts.php' );
 
 $gBitSystem->verifyPackage( 'contact' );
 
 $gBitSystem->verifyPermission( 'bit_p_read_contact' );
 
-$gContent = new Contact();
+$gContent = new Contacts();
 /*
 if($feature_listContacts != 'y') {
   $gBitSmarty->assign('msg',tra("This feature is disabled"));
@@ -110,10 +110,10 @@ if ($offset > 0) {
 	$gBitSmarty->assign('prev_offset', -1);
 }
 
-include_once( CONTACT_PKG_PATH.'display_list_header.php' );
+include_once( CONTACTS_PKG_PATH.'display_list_header.php' );
 
 $gBitSystem->setBrowserTitle("View Contacts List");
 // Display the template
-$gBitSystem->display( 'bitpackage:contact/list.tpl');
+$gBitSystem->display( 'bitpackage:contacts/list.tpl');
 
 ?>

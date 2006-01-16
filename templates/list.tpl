@@ -9,7 +9,7 @@
 
 	<div class="body">
 
-		{include file="bitpackage:contact/display_list_header.tpl"}
+		{include file="bitpackage:contacts/display_list_header.tpl"}
 
 		<div class="navbar">
 			<ul>
@@ -38,11 +38,11 @@
 				<li class="item {cycle values='odd,even'}">
 					<div class="floaticon">
 						{if ($gBitUser->mUserId and $listcontacts[changes].user_id eq $gBitUser->mUserId) or ($listcontacts[changes].public eq 'y')}
-							<a title="{tr}edit{/tr}" href="{$smarty.const.CONTACT_PKG_URL}edit.php?content_id={$listcontacts[changes].content_id}">{biticon ipackage=liberty iname="edit" iexplain="edit"}</a>
+							<a title="{tr}edit{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}edit.php?content_id={$listcontacts[changes].content_id}">{biticon ipackage=liberty iname="edit" iexplain="edit"}</a>
 						{/if}
 						{if ($gBitUser->mUserId and $listcontacts[changes].user_id eq $gBitUser->mUserId)}
 							{if ($gBitUser->isAdmin()) or ($listcontacts[changes].individual eq 'n')}
-								<a title="{tr}remove{/tr}" href="{$smarty.const.CONTACT_PKG_URL}list.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listcontacts[changes].content_id}">{biticon ipackage=liberty iname="delete" iexplain="delete"}</a>
+								<a title="{tr}remove{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}list.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listcontacts[changes].content_id}">{biticon ipackage=liberty iname="delete" iexplain="delete"}</a>
 							{/if}
 						{/if}
 					</div>
