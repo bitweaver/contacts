@@ -6,7 +6,7 @@
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
  *
- * @package contact
+ * @package contacts
  * @subpackage functions
  */
 
@@ -17,9 +17,9 @@ require_once( '../bit_setup_inc.php' );
 
 include_once( CONTACTS_PKG_PATH.'Contacts.php' );
 
-$gBitSystem->verifyPackage( 'contact' );
+$gBitSystem->verifyPackage( 'contacts' );
 
-$gBitSystem->verifyPermission( 'bit_p_read_contact' );
+$gBitSystem->verifyPermission( 'bit_p_read_contacts' );
 
 $gContent = new Contacts();
 /*

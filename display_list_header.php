@@ -6,7 +6,7 @@
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
  *
- * @package contact
+ * @package contacts
  * @subpackage functions
  */
 
@@ -14,6 +14,6 @@ $contact_type = $gContent->getContactsTypeList();
 $gBitSmarty->assign_by_ref('contact_type', $contact_type);
 
 $gBitSmarty->assign_by_ref('listcontacts', $listcontacts["data"]);
-$section = 'contact';
+$section = 'contacts';
 
 ?>

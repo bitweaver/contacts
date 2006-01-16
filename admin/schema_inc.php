@@ -55,7 +55,7 @@ $gBitInstaller->registerPackageInfo( CONTACTS_PKG_NAME, array(
 
 // ### Indexes
 $indices = array (
-	'tiki_contact_contact_id_idx' => array( 'table' => 'tiki_contacts', 'cols' => 'contact_id', 'opts' => NULL ),
+	'tiki_contact_contact_id_idx' => array( 'table' => 'tiki_contact', 'cols' => 'contact_id', 'opts' => NULL ),
 );
 $gBitInstaller->registerSchemaIndexes( CONTACTS_PKG_NAME, $indices );
 

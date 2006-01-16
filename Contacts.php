@@ -6,7 +6,7 @@
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
  *
- * @package contact
+ * @package contacts
  */
 
 /**
@@ -15,7 +15,7 @@
 require_once( LIBERTY_PKG_PATH.'LibertyAttachable.php' );		// Contact base class
 
 /**
- * @package contact
+ * @package contacts
  */
 class Contacts extends LibertyAttachable {
 	var $mContactId;

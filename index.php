@@ -1,12 +1,12 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_contacts/index.php,v 1.3 2006/01/16 15:29:13 lsces Exp $
+ * $Header: /cvsroot/bitweaver/_bit_contacts/index.php,v 1.4 2006/01/16 15:52:27 lsces Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  *
- * @package contact
+ * @package contacts
  * @subpackage functions
  */
 
@@ -26,7 +26,7 @@ if( !empty( $_REQUEST['content_id'] ) ) {
 }
 
 // Comments engine!
-if( $gBitSystem->isFeatureActive( 'feature_wiki_comments' ) ) {
+if( $gBitSystem->isFeatureActive( 'feature_contacts_comments' ) ) {
 	$comments_vars = Array('page');
 	$comments_prefix_var='contact note:';
 	$comments_object_var='page';
@@ -42,8 +42,8 @@ $displayHash = array( 'perm_name' => 'bit_p_view' );
 //$gBitSmarty->assign_by_ref('parsed',$pdata);
 $gBitSmarty->assign_by_ref( 'contentInfo', $gContent->mInfo );
 if ( $gContent->isValid() ) {
-	$gBitSystem->setBrowserTitle("Incident Reports Item");
-	$gBitSystem->display( 'bitpackage:contacts/show_contact_item.tpl');
+	$gBitSystem->setBrowserTitle("Content List Item");
+	$gBitSystem->display( 'bitpackage:contacts/edit.tpl');
 } else {
 	header ("location: ".CONTACTS_PKG_URL."list.php");
 	die;

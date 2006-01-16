@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/bitweaver/_bit_contacts/admin/Attic/admin_contact_inc.php,v 1.3 2006/01/16 15:29:14 lsces Exp $
+// $Header$
 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -29,7 +29,7 @@ $gBitSmarty->assign( 'formContactListFeatures',$formContactListFeatures );
 if (isset($_REQUEST["contactlistfeatures"])) {
 	
 	foreach( $formContactListFeatures as $item => $data ) {
-		simple_set_toggle( $item );
+		simple_set_toggle( $item, CONTACTS_PKG_NAME );
 	}
 }
 
