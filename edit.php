@@ -1,113 +1,171 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.1 2005/07/06 10:41:50 bitweaver Exp $
-// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// Initialization
+/**
+ * $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.2 2006/01/16 15:09:20 lsces Exp $
+ *
+ * Copyright (c) 2006 bitweaver.org
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
+ *
+ * @package contact
+ * @subpackage functions
+ */
+
+/**
+ * required setup
+ */
 require_once( '../bit_setup_inc.php' );
-include_once( CONTACTS_PKG_PATH.'BitContacts.php');
 
+//include_once( LIBERTY_PKG_PATH.'edit_help_inc.php' );
+include_once( CONTACT_PKG_PATH.'Contacts.php' );
+
+$gBitSystem->verifyPackage( 'contacts' );
 $gBitSystem->isPackageActive('contacts', TRUE);
-$gBitSystem->verifyPermission('bit_p_edit_contact');
+$gContent = new Contact();
 
-$contactId = ( isset( $_REQUEST['content_id'] ) ? $_REQUEST['content_id'] : 0 );
-
-$gContact = new BitContacts( $contactId );
-$gContact->load();
-/*
-if(isset($gContact->mInfo['contact_cache']) && $gContact->mInfo['contact_cache']!=0) {
-  $contact_cache = $gContact->mInfo['contact_cache'];
-  $smarty->assign('contact_cache',$contact_cache);
+if( !empty( $_REQUEST['content_id'] ) ) {
+	$gContent->load($_REQUEST['content_id']);
 }
-*/
 
-if (!$gBitUser->isAdmin()) {
-	if (!$gBitUser->hasPermission('bit_p_use_HTML')) {
-		$_REQUEST["allowhtml"] = 'off';
-	}
+// Get plugins with descriptions
+global $gLibertySystem;
+
+//if( $gContent->isLocked() ) {
+//	$gBitSystem->fatalError( 'Cannot edit page because it is locked' );
+//}
+
+if( !empty( $gContent->mInfo ) ) {
+	$formInfo = $gContent->mInfo;
+	$formInfo['edit'] = !empty( $gContent->mInfo['data'] ) ? $gContent->mInfo['data'] : '';
 }
-//$smarty->assign('allowhtml','y');
-$smarty->assign_by_ref('data', $gContact->mInfo);
+
 if(isset($_REQUEST["edit"])) {
-  if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
-    $edit_data = $_REQUEST["edit"];
-  } else {
-	$edit_data = htmlspecialchars($_REQUEST["edit"]);
-  }
-} else {
-	if (isset($gContact->mInfo["data"])) {
-		$edit_data = $gContact->mInfo["data"];
-	} else {
-		$edit_data = '';
-	}
+	$formInfo['edit'] = $_REQUEST["edit"];
 }
-
-if (isset($gContact->mInfo["description"])) {
-	$smarty->assign('description', $gContact->mInfo["description"]);
-	$description = $gContact->mInfo["description"];
-} else {
-	$smarty->assign('description', '');
-	$description = '';
+if(isset($_REQUEST['title'])) {
+	$formInfo['title'] = $_REQUEST['title'];
 }
-
 if(isset($_REQUEST["description"])) {
-  $smarty->assign_by_ref('description',$_REQUEST["description"]);
-  $description = $_REQUEST["description"];
+	$formInfo['description'] = $_REQUEST["description"];
+}
+if (isset($_REQUEST["comment"])) {
+	$formInfo['comment'] = $_REQUEST["comment"];
 }
 
-if(isset($_REQUEST["allowhtml"]) and $_REQUEST["allowhtml"] == "on") {
-    $smarty->assign('allowhtml','y');
-} else {
-	$smarty->assign('allowhtml','n');
-}
-
-$smarty->assign_by_ref('parsed', $parsed);
-$smarty->assign('preview',0);
-// If we are in preview mode then preview it!
+$cat_type = BITPAGE_CONTENT_TYPE_GUID;
 if(isset($_REQUEST["preview"])) {
-  $smarty->assign('preview',1);
+
+	// get files from all packages that process this data further
+	foreach( $gBitSystem->getPackageIntegrationFiles( 'form_processor_inc.php', TRUE ) as $package => $file ) {
+		if( $gBitSystem->isPackageActive( $package ) ) {
+			include_once( $file );
+		}
+	}
+
+	$gBitSmarty->assign('preview',1);
+	$gBitSmarty->assign('title',$_REQUEST["title"]);
+
+	$parsed = $gContent->parseData($formInfo['edit'], (!empty( $_REQUEST['format_guid'] ) ? $_REQUEST['format_guid'] :
+		( isset($gContent->mInfo['format_guid']) ? $gContent->mInfo['format_guid'] : 'tikiwiki' ) ) );
+	/* SPELLCHECKING INITIAL ATTEMPT */
+	//This nice function does all the job!
+	if ($wiki_spellcheck == 'y') {
+		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
+			$parsed = $gBitSystem->spellcheckreplace($edit_data, $parsed, $gBitLanguage->mLanguage, 'editwiki');
+			$gBitSmarty->assign('spellcheck', 'y');
+		} else {
+			$gBitSmarty->assign('spellcheck', 'n');
+		}
+	}
+	$gBitSmarty->assign_by_ref('parsed', $parsed);
+	$gContent->invokeServices( 'content_preview_function' );
+} else {
+	$gContent->invokeServices( 'content_edit_function' );
 }
-if(isset($_REQUEST['edit'])) {
-  $smarty->assign('edit',$_REQUEST['edit']);
+
+function htmldecode($string) {
+   $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
+   $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
+   return $string;
+}
+
+function parse_output(&$obj, &$parts,$i) {
+	if( !empty( $obj->parts ) ) {
+		for($i=0; $i<count($obj->parts); $i++) {
+			parse_output($obj->parts[$i], $parts,$i);
+		}
+	} else {
+		$ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;
+		switch($ctype) {
+			case 'application/x-tikiwiki':
+				$aux["body"] = $obj->body;
+				$ccc=$obj->headers["content-type"];
+				$items = split(';',$ccc);
+				foreach($items as $item) {
+					$portions = split('=',$item);
+					if(isset($portions[0])&&isset($portions[1])) {
+						$aux[trim($portions[0])]=trim($portions[1]);
+					}
+				}
+				$parts[]=$aux;
+		}
+	}
 }
 
 // Pro
 // Check if the page has changed
-if (isset($_REQUEST["fSavePage"])) {
-	
+if (isset($_REQUEST["fCancel"])) {
+	if( !empty( $gContent->mContentId ) ) {
+		header("Location: ".$gContent->getDisplayUrl() );
+	} else {
+		header("Location: ".CONTACT_PKG_URL );
+	}
+	die;
+} elseif (isset($_REQUEST["fSavePage"])) {
 	// Check if all Request values are delivered, and if not, set them
 	// to avoid error messages. This can happen if some features are
 	// disabled
-	$cat_type='contact page';
-	$cat_objid = $gContact->mContactId;
-	$cat_desc = ($feature_wiki_description == 'y') ? substr($_REQUEST["description"],0,200) : '';
-	$cat_name = $gContact->mContactId;
-	$cat_href = CONTACTS_PKG_URL."index.php?content_id=".$cat_objid;
-	if( $gContact->store( $_REQUEST ) ) {
-		header("Location: ".$gContact->getDisplayUrl() );
-        $gContact->load();
+	if( $gContent->store( $_REQUEST ) ) {
+		if ( $gBitSystem->isFeatureActive( 'contact_watch_author' ) ) {
+			$gBitUser->storeWatch( "contact_entry_changed", $gContent->mContentId, $gContent->mContentTypeGuid, $_REQUEST['title'], $gContent->getDisplayUrl() );
+		}
+		header("Location: ".$gContent->getDisplayUrl() );
 	} else {
-		$smarty->assign_by_ref( 'errors', $gContact->mErrors );	
+		$formInfo = $_REQUEST;
+		$formInfo['data'] = &$_REQUEST['edit'];
 	}
+} elseif( !empty( $_REQUEST['edit'] ) ) {
+	// perhaps we have a javascript non-saving form submit
+	$formInfo = $_REQUEST;
+	$formInfo['data'] = &$_REQUEST['edit'];
 }
-$cat_type = 'contact page';
-$cat_objid = $gContact->mContactId;
+
+// Configure quicktags list
+if ($gBitSystem->isPackageActive( 'quicktags' ) ) {
+	include_once( QUICKTAGS_PKG_PATH.'quicktags_inc.php' );
+}
+
+if ($gBitSystem->isFeatureActive( 'feature_theme_control' ) ) {
+	include( THEMES_PKG_PATH.'tc_inc.php' );
+}
+
+// Flag for 'page bar' that currently 'Edit' mode active
+// so no need to show comments & attachments, but need
+// to show 'wiki quick help'
+$gBitSmarty->assign('edit_page', 'y');
 
 // WYSIWYG and Quicktag variable
-$smarty->assign( 'textarea_id', 'editcontact' );
+$gBitSmarty->assign( 'textarea_id', 'editwiki' );
 
-$smarty->assign('edit_page', 'y');
+// formInfo might be set due to a error on submit
+if( empty( $formInfo ) ) {
+	$formInfo = &$gContent->mInfo;
+}
+$formInfo['contact_type'] = $gContent->getContactTypeList();
 
+$gBitSmarty->assign_by_ref( 'contentInfo', $formInfo );
+$gBitSmarty->assign_by_ref( 'errors', $gContent->mErrors );
+$gBitSmarty->assign( (!empty( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'body').'TabSelect', 'tdefault' );
+$gBitSmarty->assign('show_page_bar', 'y');
 
-
-$smarty->assign_by_ref( 'contactInfo', $gContact->mInfo );
-
-$smarty->assign('show_page_bar', 'y');
-
-if ( isset($_REQUEST["cancel"]) ) {
-  $gBitSystem->display( 'bitpackage:contacts/show_contact.tpl');
-} else { 
-  $gBitSystem->display( 'bitpackage:contacts/edit_contact.tpl');
-}  
+$gBitSystem->display( 'bitpackage:contacts/edit.tpl', 'Edit: ' );
 ?>
-

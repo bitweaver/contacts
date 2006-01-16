@@ -1,21 +1,20 @@
 {strip}
-{form legend="Home Contact"}
+{form legend="Contact List Features"}
 	<input type="hidden" name="page" value="{$page}" />
-	<div class="row">
-		{formlabel label="Home Contact (main contact)" for="homeContact"}
-		{forminput}
-			<select name="homeContact" id="homeContact">
-				{section name=ix loop=$contacts}
-					<option value="{$contacts[ix].content_id|escape}" {if $contacts[ix].content_id eq $home_contact}selected="selected"{/if}>{$contacts[ix].title|truncate:20:"...":true}</option>
-				{sectionelse}
-					<option>{tr}No records found{/tr}</option>
-				{/section}
-			</select>
-		{/forminput}
-	</div>
+
+	{foreach from=$formContactListFeatures key=item item=output}
+		<div class="row">
+			{formlabel label=`$output.label` for=$item}
+			{forminput}
+				{html_checkboxes name="$item" values="y" checked=`$gBitSystemPrefs.$item` labels=false id=$item}
+			{/forminput}
+			{formhelp note=`$output.help` page=`$output.page`}
+		</div>
+	{/foreach}
 
 	<div class="row submit">
-		<input type="submit" name="contactset" value="{tr}Change contact{/tr}" />
+		<input type="submit" name="contactlistfeatures" value="{tr}Change preferences{/tr}" />
 	</div>
 {/form}
+
 {/strip}

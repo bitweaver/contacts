@@ -1,10 +1,9 @@
 <?php
-
 $tables = array(
 
-'tiki_contacts' => "
-  contact_id I4 PRIMARY,
-  content_id I4 NOTNULL,
+'bit_contact' => "
+  content_id I4 PRIMARY,
+  parent_id I4 NOTNULL,
   surname C(32), 
   forename C(32),
   home_phone C(20),
@@ -16,7 +15,24 @@ $tables = array(
   town C(32),
   county C(32),
   postcode C(10),
-  description C(160)
+  description C(160),
+  project_name	C(10),
+  revision C(10),
+  closed I4,
+  closed_user_id I4,
+  status C(5),
+  priority I2
+",
+
+'bit_contact_type' => "
+  contact_type_id I4 PRIMARY,
+  type_name	C(64)
+",
+
+'bit_contact_type_map' => "
+  content_id I4 PRIMARY,
+  contact_type_id I4 PRIMARY,
+  value	I4
 ",
 
 );
@@ -26,11 +42,11 @@ global $gBitInstaller;
 $gBitInstaller->makePackageHomeable('contacts');
 
 foreach( array_keys( $tables ) AS $tableName ) {
-	$gBitInstaller->registerSchemaTable( CONTACTS_PKG_DIR, $tableName, $tables[$tableName] );
+	$gBitInstaller->registerSchemaTable( CONTACTS_PKG_NAME, $tableName, $tables[$tableName] );
 }
 
-$gBitInstaller->registerPackageInfo( CONTACTS_PKG_DIR, array(
-	'description' => "Contact package handing client contact information",
+$gBitInstaller->registerPackageInfo( CONTACTS_PKG_NAME, array(
+	'description' => "Base Contact management package with contact books and address books",
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
 	'version' => '0.1',
 	'state' => 'beta',
@@ -41,36 +57,39 @@ $gBitInstaller->registerPackageInfo( CONTACTS_PKG_DIR, array(
 $indices = array (
 	'tiki_contact_contact_id_idx' => array( 'table' => 'tiki_contacts', 'cols' => 'contact_id', 'opts' => NULL ),
 );
-$gBitInstaller->registerSchemaIndexes( CONTACTS_PKG_DIR, $indices );
+$gBitInstaller->registerSchemaIndexes( CONTACTS_PKG_NAME, $indices );
 
-// ### Sequences
-$sequences = array (
-	'tiki_contact_id_seq' => array( 'start' => 1 ) 
-);
-$gBitInstaller->registerSchemaSequences( CONTACTS_PKG_DIR, $sequences );
+// ### Defaults
 
-// ### Default UserPermissions
-$gBitInstaller->registerUserPermissions( CONTACTS_PKG_DIR, array(
-	array('bit_p_create_contact', 'Can create a contact', 'registered', 'contacts'),
-	array('bit_p_edit_contact', 'Can edit any contact', 'editors', 'contacts'),
-	array('bit_p_contact_admin', 'Can admin contact', 'admin', 'contacts'),
-	array('bit_p_read_contact', 'Can read contact', 'basic', 'contacts'),
-	array('bit_p_remove_contact', 'Can remove contact', 'editors', 'contacts')
+// ### Default User Permissions
+$gBitInstaller->registerUserPermissions( CONTACT_PKG_NAME, array(
+	array('bit_p_view_contact', 'Can browse the Contacts List', 'basic', CONTACT_PKG_NAME),
+	array('bit_p_edit_contact', 'Can edit the Contacts List', 'registered', CONTACT_PKG_NAME),
+	array('bit_p_contact_admin', 'Can admin Contacts List', 'admin', 'contacts'),
+	array('bit_p_remove_contact', 'Can remove Contact entry', 'editors', 'contacts')
 ) );
 
 // ### Default Preferences
-$gBitInstaller->registerPreferences( CONTACTS_PKG_DIR, array(
-	array('contacts', 'contact_default_ordering','title_desc'),
-	array('contacts', 'contact_list_content_id','y'),
-	array('contacts', 'contact_list_title','y'),
-	array('contacts', 'contact_list_description','y'),
-
-	array('', 'feature_contact_comments','y'),
-	array('', 'feature_contact_attachments','y'),
-	array('', 'feature_listContacts','y')
+$gBitInstaller->registerPreferences( CONTACT_PKG_NAME, array(
+	array( CONTACTS_PKG_NAME, 'contact_default_ordering','title_desc'),
+	array( CONTACTS_PKG_NAME, 'contact_left_created','y'),
+	array( CONTACT_PKG_NAME, 'contact_list_lastmodif','y'),
+	array( CONTACT_PKG_NAME, 'contact_list_notes','y'),
+	array( CONTACT_PKG_NAME, 'contact_list_title','y'),
+	array( CONTACT_PKG_NAME, 'contact_list_user','y'),
 ) );
 
-$gBitInstaller->registerSchemaDefault( CONTACTS_PKG_DIR, array(
-	"DELETE FROM `".BIT_DB_PREFIX."tiki_content` WHERE `content_type_guid` = 'contacts'"
+$gBitInstaller->registerSchemaDefault( CONTACT_PKG_NAME, array(
+"INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (0, 'Personal')",
+"INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (1, 'Business')",
+"INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (2, 'Manufacturer')",
+"INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (3, 'Distributor')",
+"INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (4, 'Supplier')",
+"INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (5, 'Record Company')",
+"INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (6, 'Record Artist')",
+"INSERT INTO `".BIT_DB_PREFIX."bit_contact_type` VALUES (7, 'Cartographer')",
+
 ) );
+
+
 ?>
