@@ -3,6 +3,7 @@ $tables = array(
 
 'bit_contact' => "
   content_id I4 PRIMARY,
+  contact_id I4 NOTNULL,
   parent_id I4 NOTNULL,
   surname C(32), 
   forename C(32),
@@ -55,7 +56,7 @@ $gBitInstaller->registerPackageInfo( CONTACTS_PKG_NAME, array(
 
 // ### Indexes
 $indices = array (
-	'tiki_contact_contact_id_idx' => array( 'table' => 'tiki_contact', 'cols' => 'contact_id', 'opts' => NULL ),
+	'tiki_contact_contact_id_idx' => array( 'table' => 'bit_contact', 'cols' => 'contact_id', 'opts' => NULL ),
 );
 $gBitInstaller->registerSchemaIndexes( CONTACTS_PKG_NAME, $indices );
 
