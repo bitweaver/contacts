@@ -19,6 +19,7 @@ require_once( LIBERTY_PKG_PATH.'LibertyAttachable.php' );		// Contact base class
  */
 class Contacts extends LibertyAttachable {
 	var $mContactId;
+	var $mParentId;
 
 	/**
 	 * Constructor 
@@ -63,6 +64,8 @@ class Contacts extends LibertyAttachable {
 			if ( $result && $result->numRows() ) {
 				$this->mInfo = $result->fields;
 				$this->mContentId = (int)$result->fields['content_id'];
+				$this->mContactId = (int)$result->fields['contact_id'];
+				$this->mParentId = (int)$result->fields['contact_id'];
 				$this->mContactName = $result->fields['title'];
 				$this->mInfo['creator'] = (isset( $result->fields['creator_real_name'] ) ? $result->fields['creator_real_name'] : $result->fields['creator_user'] );
 				$this->mInfo['editor'] = (isset( $result->fields['modifier_real_name'] ) ? $result->fields['modifier_real_name'] : $result->fields['modifier_user'] );
@@ -95,6 +98,8 @@ class Contacts extends LibertyAttachable {
 		} else {
 			unset( $pParamHash['content_id'] );
 		}
+		if ( empty( $pParamHash['parent_id'] ) )
+			$pParamHash['parent_id'] = $this->mContentId;
 			
 		// content store
 		// check for name issues, first truncate length if too long
@@ -114,6 +119,8 @@ class Contacts extends LibertyAttachable {
 		}
 
 		// Secondary store entries
+		$pParamHash['secondary_store']['surname'] = '';
+		$pParamHash['secondary_store']['forename'] = '';
 		$pParamHash['secondary_store']['status'] = !empty( $pParamHash['status'] ) ? $pParamHash['status'] : 'O';
 		$pParamHash['secondary_store']['priority'] = !empty( $pParamHash['priority'] ) ? $pParamHash['priority'] : '1';
 		$pParamHash['secondary_store']['project_name'] = !empty( $pParamHash['project_name'] ) ? $pParamHash['project_name'] : 'Develope';
@@ -132,8 +139,9 @@ class Contacts extends LibertyAttachable {
 	function store( &$pParamHash ) {
 		if( $this->verify( $pParamHash ) ) {
 			// Start a transaction wrapping the whole insert into liberty 
+
 			$this->mDb->StartTrans();
-		    if ( LibertyContent::store( $pParamHash ) ) {
+			if ( LibertyContent::store( $pParamHash ) ) {
 				$table = BIT_DB_PREFIX."bit_contact";
 
 				// mContentId will not be set until the secondary data has commited 
@@ -144,14 +152,15 @@ class Contacts extends LibertyAttachable {
 					}
 				} else {
 					$pParamHash['secondary_store']['content_id'] = $pParamHash['content_id'];
-/*					if( isset( $pParamHash['ir_id'] ) && is_numeric( $pParamHash['ir_id'] ) ) {
-						$pParamHash['secondary_store']['ir_id'] = $pParamHash['ir_id'];
+					if( isset( $pParamHash['contact_id'] ) && is_numeric( $pParamHash['contact_id'] ) ) {
+						$pParamHash['secondary_store']['contact_id'] = $pParamHash['contact_id'];
 					} else {
-						$pParamHash['secondary_store']['ir_id'] = $this->mDb->GenID( 'bit_ir_id_seq');
+						$pParamHash['secondary_store']['contact_id'] = $this->mDb->GenID( 'bit_contact_id_seq');
 					}	
-*/
+
 					$pParamHash['secondary_store']['parent_id'] = $pParamHash['secondary_store']['content_id'];
-//					$this->mContactId = $pParamHash['secondary_store']['ir_id'];
+					$this->mContactId = $pParamHash['secondary_store']['content_id'];
+					$this->mParentId = $pParamHash['secondary_store']['parent_id'];
 					$this->mContentId = $pParamHash['content_id'];
 					$result = $this->mDb->associateInsert( $table, $pParamHash['secondary_store'] );
 				}
@@ -307,7 +316,7 @@ class Contacts extends LibertyAttachable {
 	*/
 	function getContactsTypeList() {
 		$query = "SELECT `type_name` FROM `bit_contact_type`
-				  $mid ORDER BY `type_name`";
+				  ORDER BY `type_name`";
 		$result = $this->mDb->query($query);
 		$ret = array();
 
