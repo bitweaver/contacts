@@ -60,6 +60,11 @@ $indices = array (
 );
 $gBitInstaller->registerSchemaIndexes( CONTACTS_PKG_NAME, $indices );
 
+// ### Sequences
+$sequences = array (
+	'bit_contact_id_seq' => array( 'start' => 1 )
+);
+
 // ### Defaults
 
 // ### Default User Permissions
