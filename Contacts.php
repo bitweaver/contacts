@@ -268,7 +268,7 @@ class Contacts extends LibertyAttachable {
 
 		if ($find) {
 			$findesc = '%' . strtoupper( $find ) . '%';
-			$mid = " WHERE (UPPER(tb.`title`) like ? or UPPER(tb.`description`) like ?) ";
+			$mid = " WHERE (UPPER(b.`title`) like ? or UPPER(b.`description`) like ?) ";
 			$bindvars=array($findesc,$findesc);
 		} else {
 			$mid = '';
