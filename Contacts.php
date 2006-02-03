@@ -46,7 +46,7 @@ class Contacts extends LibertyAttachable {
 	/**
 	 * Load a Contact content Item
 	 *
-	 * (Describe IRList object here )
+	 * (Describe Contact object here )
 	 */
 	function load($pContentId = NULL) {
 		if ( $pContentId ) $this->mContentId = (int)$pContentId;
@@ -54,7 +54,7 @@ class Contacts extends LibertyAttachable {
 			$query = "select con.*, tc.*,
 				uue.`login` AS modifier_user, uue.`real_name` AS modifier_real_name,
 				uuc.`login` AS creator_user, uuc.`real_name` AS creator_real_name
-				FROM `".BIT_DB_PREFIX."bit_contact` con
+				FROM `".BIT_DB_PREFIX."contact` con
 				INNER JOIN `".BIT_DB_PREFIX."tiki_content` tc ON ( tc.`content_id` = con.`content_id` )
 				LEFT JOIN `".BIT_DB_PREFIX."users_users` uue ON (uue.`user_id` = tc.`modifier_user_id`)
 				LEFT JOIN `".BIT_DB_PREFIX."users_users` uuc ON (uuc.`user_id` = tc.`user_id`)
@@ -121,10 +121,6 @@ class Contacts extends LibertyAttachable {
 		// Secondary store entries
 		$pParamHash['secondary_store']['surname'] = '';
 		$pParamHash['secondary_store']['forename'] = '';
-		$pParamHash['secondary_store']['status'] = !empty( $pParamHash['status'] ) ? $pParamHash['status'] : 'O';
-		$pParamHash['secondary_store']['priority'] = !empty( $pParamHash['priority'] ) ? $pParamHash['priority'] : '1';
-		$pParamHash['secondary_store']['project_name'] = !empty( $pParamHash['project_name'] ) ? $pParamHash['project_name'] : 'Develope';
-		$pParamHash['secondary_store']['revision'] = !empty( $pParamHash['revision'] ) ? $pParamHash['revision'] : '0.0';
 		return( count( $this->mErrors ) == 0 );
 	}
 
@@ -134,7 +130,6 @@ class Contacts extends LibertyAttachable {
 	* @param $pParamHash[title] title of the new contact
 	* @param $pParamHash[edit] description of the contact
 	* @return bool TRUE on success, FALSE if store could not occur. If FALSE, $this->mErrors will have reason why
-	* @access public
 	**/
 	function store( &$pParamHash ) {
 		if( $this->verify( $pParamHash ) ) {
@@ -142,7 +137,7 @@ class Contacts extends LibertyAttachable {
 
 			$this->mDb->StartTrans();
 			if ( LibertyContent::store( $pParamHash ) ) {
-				$table = BIT_DB_PREFIX."bit_contact";
+				$table = BIT_DB_PREFIX."contact";
 
 				// mContentId will not be set until the secondary data has commited 
 				if( $this->verifyId( $this->mContactId ) ) {
@@ -155,7 +150,7 @@ class Contacts extends LibertyAttachable {
 					if( isset( $pParamHash['contact_id'] ) && is_numeric( $pParamHash['contact_id'] ) ) {
 						$pParamHash['secondary_store']['contact_id'] = $pParamHash['contact_id'];
 					} else {
-						$pParamHash['secondary_store']['contact_id'] = $this->mDb->GenID( 'bit_contact_id_seq');
+						$pParamHash['secondary_store']['contact_id'] = $this->mDb->GenID( 'contact_id_seq');
 					}	
 
 					$pParamHash['secondary_store']['parent_id'] = $pParamHash['secondary_store']['content_id'];
@@ -182,9 +177,9 @@ class Contacts extends LibertyAttachable {
 		$ret = FALSE;
 		if ($this->isValid() ) {
 			$this->mDb->StartTrans();
-			$query = "DELETE FROM `".BIT_DB_PREFIX."bit_contact` WHERE `content_id` = ?";
+			$query = "DELETE FROM `".BIT_DB_PREFIX."contact` WHERE `content_id` = ?";
 			$result = $this->mDb->query($query, array($this->mContentId ) );
-			$query = "DELETE FROM `".BIT_DB_PREFIX."bit_contact_type_map` WHERE `content_id` = ?";
+			$query = "DELETE FROM `".BIT_DB_PREFIX."contact_type_map` WHERE `content_id` = ?";
 			$result = $this->mDb->query($query, array($this->mContentId ) );
 			if (LibertyAttachable::expunge() ) {
 			$ret = TRUE;
@@ -286,7 +281,7 @@ class Contacts extends LibertyAttachable {
 		$query = "SELECT con.*, tc.*, 
 				uue.`login` AS modifier_user, uue.`real_name` AS modifier_real_name,
 				uuc.`login` AS creator_user, uuc.`real_name` AS creator_real_name
-				FROM `".BIT_DB_PREFIX."bit_contact` con
+				FROM `".BIT_DB_PREFIX."contact` con
 				INNER JOIN `".BIT_DB_PREFIX."tiki_content` tc ON ( tc.`content_id` = con.`content_id` )
 				LEFT JOIN `".BIT_DB_PREFIX."users_users` uue ON (uue.`user_id` = tc.`modifier_user_id`)
 				LEFT JOIN `".BIT_DB_PREFIX."users_users` uuc ON (uuc.`user_id` = tc.`user_id`)
@@ -302,7 +297,7 @@ class Contacts extends LibertyAttachable {
 		}
 		$retval = array();
 		$retval["data"] = $ret;
-		$query_cant = "SELECT COUNT(tc.`content_id`) FROM `".BIT_DB_PREFIX."bit_contact` tc $mid";
+		$query_cant = "SELECT COUNT(tc.`content_id`) FROM `".BIT_DB_PREFIX."contact` tc $mid";
 
 		$cant = $this->mDb->getOne($query_cant, $bindvars);
 		$retval["cant"] = $cant;
@@ -315,7 +310,7 @@ class Contacts extends LibertyAttachable {
 	* @return array List of contact type names from the contact mamanger in alphabetical order
 	*/
 	function getContactsTypeList() {
-		$query = "SELECT `type_name` FROM `bit_contact_type`
+		$query = "SELECT `type_name` FROM `contact_type`
 				  ORDER BY `type_name`";
 		$result = $this->mDb->query($query);
 		$ret = array();
