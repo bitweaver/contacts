@@ -5,7 +5,7 @@ $tables = array(
   content_id I4 PRIMARY,
   contact_id I4 NOTNULL,
   parent_id I4 NOTNULL,
-  surname C(32), 
+  surname C(32),
   forename C(32),
   home_phone C(20),
   mobile_phone C(20),
@@ -55,8 +55,8 @@ $tables = array(
   entry_country_id I4,
   entry_zone_id I4,
   entry_telephone C(32)
-  CONSTRAINT ', CONSTRAINT `addr_book_zone_ref` FOREIGN KEY ( `entry_zone_id` ) REFERENCES `".BITCOMMERCE_DB_PREFIX."zones`( `zone_id` )
-  			  , CONSTRAINT `addr_book_country_ref` FOREIGN KEY ( `entry_country_id` ) REFERENCES `".BITCOMMERCE_DB_PREFIX."countries`( `countries_id` )'
+  CONSTRAINT ', CONSTRAINT `addr_book_zone_ref` FOREIGN KEY ( `entry_zone_id` ) REFERENCES `".BIT_DB_PREFIX."zones`( `zone_id` )
+  			  , CONSTRAINT `addr_book_country_ref` FOREIGN KEY ( `entry_country_id` ) REFERENCES `".BIT_DB_PREFIX."countries`( `countries_id` )'
 ",
 
 'address_format' => "
