@@ -10,7 +10,7 @@ $tables = array(
   home_phone C(20),
   mobile_phone C(20),
   email_address C(128),
-  description C(160),
+  description C(160)
 ",
 
 'contact_type' => "
@@ -85,7 +85,7 @@ $gBitInstaller->registerPackageInfo( CONTACTS_PKG_NAME, array(
 
 // ### Indexes
 $indices = array (
-	'tiki_contact_contact_id_idx' => array( 'table' => 'contact', 'cols' => 'contact_id', 'opts' => NULL ),
+	'contact_contact_id_idx' => array( 'table' => 'contact', 'cols' => 'contact_id', 'opts' => NULL ),
 );
 $gBitInstaller->registerSchemaIndexes( CONTACTS_PKG_NAME, $indices );
 
