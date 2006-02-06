@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_contacts/list_contacts.php,v 1.2 2006/01/16 15:52:27 lsces Exp $
+// $Header: /cvsroot/bitweaver/_bit_contacts/list_contacts.php,v 1.3 2006/02/06 21:34:30 lsces Exp $
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -21,7 +21,7 @@ if ( empty( $_REQUEST["sort_mode"] ) ) {
 // Get a list of Contacts 
 $contact->getList( $_REQUEST );
 
-$smarty->assign_by_ref('control', $_REQUEST["control"]);
+$smarty->assign_by_ref('listInfo', $_REQUEST['listInfo']);
 $smarty->assign_by_ref('list', $_REQUEST["data"]);
 
 

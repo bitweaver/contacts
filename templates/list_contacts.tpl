@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.1 2005/07/06 10:41:50 bitweaver Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.2 2006/02/06 21:34:32 lsces Exp $ *}
 <div class="floaticon">
 	{if $gBitUser->hasPermission('bit_p_contact_admin')}
 		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{biticon ipackage=liberty iname="config" iexplain="configure"}</a>
@@ -17,17 +17,17 @@
 <tr><td>{tr}Find{/tr}</td>
    <td>
    <form method="get" action="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php">
-     <input type="text" name="find" value="{$control.find|escape}" />
+     <input type="text" name="find" value="{$listInfo.find|escape}" />
      <input type="submit" name="search" value="{tr}find{/tr}" />
-     <input type="hidden" name="sort_mode" value="{$control.sort_mode|escape}" />
+     <input type="hidden" name="sort_mode" value="{$listInfo.sort_mode|escape}" />
    </form>
    </td>
 </tr>
 </table>
 
 <form id="checkform" method="post" action="{$smarty.server.PHP_SELF}">
-<input type="hidden" name="offset" value="{$control.offset|escape}" />
-<input type="hidden" name="sort_mode" value="{$control.sort_mode|escape}" />
+<input type="hidden" name="offset" value="{$listInfo.offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$listInfo.sort_mode|escape}" />
 <table class="data">
 <tr>
 {*  at the moment, the only working option to use the checkboxes for is deleting pages. so for now the checkboxes are visible iff $bit_p_remove is set. Other applications make sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here: *}
@@ -40,14 +40,14 @@
 {if $checkboxes_on eq 'y'}
 	<th>&nbsp;</th>{/if}
 {if $contact_list_content_id eq 'y'}
-	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$control.offset}&amp;sort_mode={if $control.sort_mode eq 'content_id_desc'}content_id_asc{else}content_id_desc{/if}">{tr}Contact Id{/tr}</a></th>
+	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$listInfo.offset}&amp;sort_mode={if $listInfo.sort_mode eq 'content_id_desc'}content_id_asc{else}content_id_desc{/if}">{tr}Contact Id{/tr}</a></th>
 {/if}{if $contact_list_title eq 'y'}
-	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$control.offset}&amp;sort_mode={if $control.sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></th>
-	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$control.offset}&amp;sort_mode={if $control.sort_mode eq 'town_desc'}town_asc{else}town_desc{/if}">{tr}Town{/tr}</a></th>
-	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$control.offset}&amp;sort_mode={if $control.sort_mode eq 'county_desc'}county_asc{else}county_desc{/if}">{tr}County{/tr}</a></th>
-	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$control.offset}&amp;sort_mode={if $control.sort_mode eq 'postcode_desc'}postcode_asc{else}postcode_desc{/if}">{tr}Postcode{/tr}</a></th>
+	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$listInfo.offset}&amp;sort_mode={if $listInfo.sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></th>
+	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$listInfo.offset}&amp;sort_mode={if $listInfo.sort_mode eq 'town_desc'}town_asc{else}town_desc{/if}">{tr}Town{/tr}</a></th>
+	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$listInfo.offset}&amp;sort_mode={if $listInfo.sort_mode eq 'county_desc'}county_asc{else}county_desc{/if}">{tr}County{/tr}</a></th>
+	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$listInfo.offset}&amp;sort_mode={if $listInfo.sort_mode eq 'postcode_desc'}postcode_asc{else}postcode_desc{/if}">{tr}Postcode{/tr}</a></th>
 {/if}{if $contact_list_description eq 'y'}
-	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$control.offset}&amp;sort_mode={if $control.sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></th>
+	<th><a href="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php?offset={$listInfo.offset}&amp;sort_mode={if $listInfo.sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></th>
 {/if}
 </tr>
 
