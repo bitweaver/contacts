@@ -164,7 +164,7 @@ class Address extends LibertyContent {
 //					$action = "Created";
 //					$mailEvents = 'wiki_page_changes';
 				}
-				$this->mDb->associateUpdate(`".BIT_DB_PREFIX."address_book`, $pParamHash['address_store'], array( 'name'=>'address_book_id' , 'value'=>$pParamHash['address'] ) );
+				$this->mDb->associateUpdate(`".BIT_DB_PREFIX."address_book`, $pParamHash['address_store'], array( 'address_book_id'=>$pParamHash['address'] ) );
 			}
 			if( !$this->getDefaultAddress() || !empty( $pParamHash['primary'] ) ) {
 				$this->setDefaultAddress( $pParamHash['address'] );

@@ -142,8 +142,7 @@ class Contacts extends LibertyAttachable {
 				// mContentId will not be set until the secondary data has commited 
 				if( $this->verifyId( $this->mContactId ) ) {
 					if( !empty( $pParamHash['secondary_store'] ) ) {
-						$locId = array ( "name" => "content_id", "value" => $this->mContentId );
-						$result = $this->mDb->associateUpdate( $table, $pParamHash['secondary_store'], $locId );
+						$result = $this->mDb->associateUpdate( $table, $pParamHash['secondary_store'], array( "content_id" => $this->mContentId ) );
 					}
 				} else {
 					$pParamHash['secondary_store']['content_id'] = $pParamHash['content_id'];

@@ -1,6 +1,6 @@
 <?php
 /**
-* $Header: /cvsroot/bitweaver/_bit_contacts/Attic/BitContacts.php,v 1.1 2005/07/06 10:41:50 bitweaver Exp $
+* $Header: /cvsroot/bitweaver/_bit_contacts/Attic/BitContacts.php,v 1.2 2006/02/08 23:24:27 spiderr Exp $
 *
 * Adapted from tiki_sample to form tiki_contacts but Lester Caine
 * Copyright (c) 2004 bitweaver.org
@@ -9,7 +9,7 @@
 * All Rights Reserved. See copyright.txt for details and a complete list of authors.
 * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
 *
-* $Id: BitContacts.php,v 1.1 2005/07/06 10:41:50 bitweaver Exp $
+* $Id: BitContacts.php,v 1.2 2006/02/08 23:24:27 spiderr Exp $
 */
 /**
 * Sample class to illustrate best practices when creating a new bitweaver package that
@@ -19,7 +19,7 @@
 *
 * @author lscesuk <lester@lsces.co.uk>
 *
-* @version $Revision: 1.1 $ $Date: 2005/07/06 10:41:50 $ $Author: bitweaver $
+* @version $Revision: 1.2 $ $Date: 2006/02/08 23:24:27 $ $Author: spiderr $
 *
 * @class BitContacts
 */
@@ -65,8 +65,7 @@ class BitContacts extends LibertyAttachable {
 
 			$table = BIT_DB_PREFIX."tiki_contacts";
 			if( $this->mContactId ) {
-				$locId = array ( "name" => "content_id", "value" => $pParamHash['content_id'] );
-				$result = $this->associateUpdate( $table, $pParamHash['contact_store'], $locId );
+				$result = $this->associateUpdate( $table, $pParamHash['contact_store'], array( "content_id" => $pParamHash['content_id'] ) );
 			} else {
 				$pParamHash['contact_store']['contact_id'] = $pParamHash['content_id'];
 				$pParamHash['contact_store']['content_id'] = $pParamHash['content_id'];
