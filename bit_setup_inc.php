@@ -1,6 +1,10 @@
 <?php
 global $gBitSystem, $gBitSmarty;
-$gBitSystem->registerPackage( 'contacts', dirname( __FILE__).'/' );
+$registerHash = array(
+	'package_name' => 'contacts',
+	'package_path' => dirname( __FILE__ ).'/',
+);
+$gBitSystem->registerPackage( $registerHash );
 
 define('CONTACTS_CONTENT_TYPE_GUID', 'contacts' );
 
