@@ -21,7 +21,7 @@ $tables = array(
 'contact_type_map' => "
   content_id I4 PRIMARY,
   contact_type_id I4 PRIMARY,
-  value	I4
+  type_value	I4
 ",
 
 'countries' => "
