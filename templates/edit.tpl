@@ -97,19 +97,6 @@
 				{/jstab}
 
 				{jstab title="Advanced Options"}
-					{legend legend="Advanced Options"}
-						{if $wiki_spellcheck eq 'y'}
-							<div class="row">
-								{formlabel label="Spellcheck" for="spellcheck"}
-								{forminput}
-									<input type="checkbox" name="spellcheck" id="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} />
-									{formhelp note=""}
-								{/forminput}
-							</div>
-						{/if}
-
-					{/legend}
-
 					{if $gBitSystem->isPackageActive( 'nexus' )}
 						{legend legend="Insert Link in Menu"}
 							{include file="bitpackage:nexus/insert_menu_item_inc.tpl"}
