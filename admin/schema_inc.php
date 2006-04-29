@@ -100,8 +100,8 @@ $sequences = array (
 $gBitInstaller->registerUserPermissions( CONTACTS_PKG_NAME, array(
 	array('bit_p_view_contact', 'Can browse the Contacts List', 'basic', CONTACTS_PKG_NAME),
 	array('bit_p_edit_contact', 'Can edit the Contacts List', 'registered', CONTACTS_PKG_NAME),
-	array('bit_p_CONTACTS_admin', 'Can admin Contacts List', 'admin', 'contacts'),
-	array('bit_p_remove_contact', 'Can remove a Contact entry', 'editors', 'contacts')
+	array('bit_p_contacts_admin', 'Can admin Contacts List', 'admin', CONTACTS_PKG_NAME),
+	array('bit_p_remove_contact', 'Can remove a Contact entry', 'editors', CONTACTS_PKG_NAME)
 ) );
 
 // ### Default Preferences
