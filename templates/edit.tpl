@@ -95,14 +95,6 @@
 						{/legend}
 					{/if}
 				{/jstab}
-
-				{jstab title="Advanced Options"}
-					{if $gBitSystem->isPackageActive( 'nexus' )}
-						{legend legend="Insert Link in Menu"}
-							{include file="bitpackage:nexus/insert_menu_item_inc.tpl"}
-						{/legend}
-					{/if}
-				{/jstab}
 			{/jstabs}
 		{/form}
 
