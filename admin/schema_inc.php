@@ -78,9 +78,6 @@ foreach( array_keys( $tables ) AS $tableName ) {
 $gBitInstaller->registerPackageInfo( CONTACTS_PKG_NAME, array(
 	'description' => "Base Contact management package with contact books and address books",
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
-	'version' => '0.1',
-	'state' => 'beta',
-	'dependencies' => '',
 ) );
 
 // ### Indexes
