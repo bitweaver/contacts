@@ -1,16 +1,16 @@
 <div class="floaticon">
   {if $lock}
-    {biticon ipackage="wiki" iname="locked" iexplain="locked"}{$info.editor|userlink}
+    {biticon ipackage="icons" iname="locked" iexplain="locked"}{$info.editor|userlink}
   {/if}
   {if $print_page ne 'y'}
     {if !$lock}
       {if $gBitUser->hasPermission('bit_p_edit_contact')}
-		<a href="edit.php?content_id={$contactInfo.content_id}" {if $beingEdited eq 'y'}{popup_init src="`$gBitLoc.THEMES_PKG_URL`overlib.js"}{popup text="$semUser" width="-1"}{/if}>{biticon ipackage=liberty iname="edit" iexplain="edit"}</a>
+		<a href="edit.php?content_id={$contactInfo.content_id}" {if $beingEdited eq 'y'}{popup_init src="`$gBitLoc.THEMES_PKG_URL`overlib.js"}{popup text="$semUser" width="-1"}{/if}>{biticon ipackage="icons" iname="accessories-text-editor" iexplain="edit"}</a>
       {/if}
     {/if}
-    <a title="{tr}print{/tr}" href="print.php?content_id={$contactInfo.content_id}">{biticon ipackage=liberty iname="print" iexplain="print"}</a>
+    <a title="{tr}print{/tr}" href="print.php?content_id={$contactInfo.content_id}">{biticon ipackage="icons" iname="document-print" iexplain="print"}</a>
       {if $gBitUser->hasPermission('bit_p_remove_contact')}
-        <a title="{tr}remove this page{/tr}" href="remove_contact.php?content_id={$contactInfo.content_id}">{biticon ipackage=liberty iname="delete" iexplain="delete"}</a>
+        <a title="{tr}remove this page{/tr}" href="remove_contact.php?content_id={$contactInfo.content_id}">{biticon ipackage="icons" iname="edit-delete" iexplain="delete"}</a>
       {/if}
   {/if} {* end print_page *}
 </div> {*end .floaticon *}

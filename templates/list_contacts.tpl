@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.3 2006/07/05 18:51:33 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.4 2006/09/03 20:06:33 squareing Exp $ *}
 <div class="floaticon">
 	{if $gBitUser->hasPermission('bit_p_contact_admin')}
-		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{biticon ipackage=liberty iname="config" iexplain="configure"}</a>
+		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{biticon ipackage="icons" iname="document-properties" iexplain="configure"}</a>
 	{/if}
 	{bithelp}
 </div>

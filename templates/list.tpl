@@ -13,7 +13,7 @@
 
 		<div class="navbar">
 			<ul>
-				<li>{biticon ipackage=liberty iname=sort iexplain="sort by"}</li>
+				<li>{biticon ipackage="icons" iname="emblem-symbolic-link" iexplain="sort by"}</li>
 				{if $ir_list_title eq 'y'}
 					<li>{smartlink ititle="Contact Number" isort="content_id" idefault=1 iorder=desc offset=$offset ihash=$ihash}</li>
 					<li>{smartlink ititle="Title" isort="title" offset=$offset ihash=$ihash}</li>
@@ -38,11 +38,11 @@
 				<li class="item {cycle values='odd,even'}">
 					<div class="floaticon">
 						{if ($gBitUser->mUserId and $listcontacts[changes].user_id eq $gBitUser->mUserId) or ($listcontacts[changes].public eq 'y')}
-							<a title="{tr}edit{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}edit.php?content_id={$listcontacts[changes].content_id}">{biticon ipackage=liberty iname="edit" iexplain="edit"}</a>
+							<a title="{tr}edit{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}edit.php?content_id={$listcontacts[changes].content_id}">{biticon ipackage="icons" iname="accessories-text-editor" iexplain="edit"}</a>
 						{/if}
 						{if ($gBitUser->mUserId and $listcontacts[changes].user_id eq $gBitUser->mUserId)}
 							{if ($gBitUser->isAdmin()) or ($listcontacts[changes].individual eq 'n')}
-								<a title="{tr}remove{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}list.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listcontacts[changes].content_id}">{biticon ipackage=liberty iname="delete" iexplain="delete"}</a>
+								<a title="{tr}remove{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}list.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listcontacts[changes].content_id}">{biticon ipackage="icons" iname="edit-delete" iexplain="delete"}</a>
 							{/if}
 						{/if}
 					</div>
