@@ -69,8 +69,6 @@ $tables = array(
 
 global $gBitInstaller;
 
-$gBitInstaller->makePackageHomeable('contacts');
-
 foreach( array_keys( $tables ) AS $tableName ) {
 	$gBitInstaller->registerSchemaTable( CONTACTS_PKG_NAME, $tableName, $tables[$tableName] );
 }
