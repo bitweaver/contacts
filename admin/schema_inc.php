@@ -86,8 +86,10 @@ $gBitInstaller->registerSchemaIndexes( CONTACTS_PKG_NAME, $indices );
 
 // ### Sequences
 $sequences = array (
-	'bit_contact_id_seq' => array( 'start' => 1 )
+	'contact_id_seq' => array( 'start' => 1 ),
+	'country_id_seq' => array( 'start' => 240 ),
 );
+$gBitInstaller->registerSchemaSequences( CONTACTS_PKG_NAME, $sequences );
 
 // ### Defaults
 

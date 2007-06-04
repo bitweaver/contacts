@@ -51,14 +51,14 @@ class Contacts extends LibertyAttachable {
 	function load($pContentId = NULL) {
 		if ( $pContentId ) $this->mContentId = (int)$pContentId;
 		if( $this->verifyId( $this->mContentId ) ) {
-			$query = "select con.*, tc.*,
+			$query = "select con.*, lc.*,
 				uue.`login` AS modifier_user, uue.`real_name` AS modifier_real_name,
 				uuc.`login` AS creator_user, uuc.`real_name` AS creator_real_name
 				FROM `".BIT_DB_PREFIX."contact` con
-				INNER JOIN `".BIT_DB_PREFIX."tiki_content` tc ON ( tc.`content_id` = con.`content_id` )
-				LEFT JOIN `".BIT_DB_PREFIX."users_users` uue ON (uue.`user_id` = tc.`modifier_user_id`)
-				LEFT JOIN `".BIT_DB_PREFIX."users_users` uuc ON (uuc.`user_id` = tc.`user_id`)
-				WHERE tc.`content_id`=?";
+				INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON ( lc.`content_id` = con.`content_id` )
+				LEFT JOIN `".BIT_DB_PREFIX."users_users` uue ON (uue.`user_id` = lc.`modifier_user_id`)
+				LEFT JOIN `".BIT_DB_PREFIX."users_users` uuc ON (uuc.`user_id` = lc.`user_id`)
+				WHERE lc.`content_id`=?";
 			$result = $this->mDb->query( $query, array( $this->mContentId ) );
 
 			if ( $result && $result->numRows() ) {
@@ -98,29 +98,27 @@ class Contacts extends LibertyAttachable {
 		} else {
 			unset( $pParamHash['content_id'] );
 		}
+
 		if ( empty( $pParamHash['parent_id'] ) )
 			$pParamHash['parent_id'] = $this->mContentId;
 			
 		// content store
 		// check for name issues, first truncate length if too long
-		if( !empty( $pParamHash['title'] ) )  {
-			if( empty( $this->mContentId ) ) {
-				if( empty( $pParamHash['title'] ) ) {
-					$this->mErrors['title'] = 'You must enter a name for this contact.';
-				} else {
-					$pParamHash['content_store']['title'] = substr( $pParamHash['title'], 0, 160 );
-				}
-			} else {
-				$pParamHash['content_store']['title'] = ( isset( $pParamHash['title'] ) ) ? substr( $pParamHash['title'], 0, 160 ) : $this->mIRListName;
-			}
-		} elseif( empty( $pParamHash['title'] ) ) {
-			// no name specified
-			$this->mErrors['title'] = 'You must specify a name';
-		}
+		if( empty( $pParamHash['surname'] ) || empty( $pParamHash['forename'] ) )  {
+			$this->mErrors['names'] = 'You must enter a forename and surname for this contact.';
+		} else {
+			$pParamHash['title'] = substr( $pParamHash['forename'].' '.$pParamHash['surname'], 0, 160 );
+			$pParamHash['content_store']['title'] = $pParamHash['title'];
+		}	
 
 		// Secondary store entries
-		$pParamHash['secondary_store']['surname'] = '';
-		$pParamHash['secondary_store']['forename'] = '';
+		$pParamHash['contact_store']['surname'] = $pParamHash['surname'];
+		$pParamHash['contact_store']['forename'] = $pParamHash['forename'];
+
+		if ( !empty( $pParamHash['home_phone'] ) ) $pParamHash['contact_store']['home_phone'] = $pParamHash['home_phone'];
+		if ( !empty( $pParamHash['mobile_phone'] ) ) $pParamHash['contact_store']['mobile_phone'] = $pParamHash['mobile_phone'];
+		if ( !empty( $pParamHash['email_address'] ) ) $pParamHash['contact_store']['email_address'] = $pParamHash['email_address'];
+
 		return( count( $this->mErrors ) == 0 );
 	}
 
@@ -136,33 +134,35 @@ class Contacts extends LibertyAttachable {
 			// Start a transaction wrapping the whole insert into liberty 
 
 			$this->mDb->StartTrans();
-			if ( LibertyContent::store( $pParamHash ) ) {
+			if ( LibertyAttachable::store( $pParamHash ) ) {
 				$table = BIT_DB_PREFIX."contact";
 
 				// mContentId will not be set until the secondary data has commited 
 				if( $this->verifyId( $this->mContactId ) ) {
-					if( !empty( $pParamHash['secondary_store'] ) ) {
-						$result = $this->mDb->associateUpdate( $table, $pParamHash['secondary_store'], array( "content_id" => $this->mContentId ) );
+					if( !empty( $pParamHash['contact_store'] ) ) {
+						$result = $this->mDb->associateUpdate( $table, $pParamHash['contact_store'], array( "content_id" => $this->mContentId ) );
 					}
 				} else {
-					$pParamHash['secondary_store']['content_id'] = $pParamHash['content_id'];
+					$pParamHash['contact_store']['content_id'] = $pParamHash['content_id'];
+					$pParamHash['contact_store']['contact_id'] = $pParamHash['content_id'];
 					if( isset( $pParamHash['contact_id'] ) && is_numeric( $pParamHash['contact_id'] ) ) {
-						$pParamHash['secondary_store']['contact_id'] = $pParamHash['contact_id'];
+						$pParamHash['contact_store']['contact_id'] = $pParamHash['contact_id'];
 					} else {
-						$pParamHash['secondary_store']['contact_id'] = $this->mDb->GenID( 'contact_id_seq');
+						$pParamHash['contact_store']['contact_id'] = $this->mDb->GenID( 'contact_id_seq');
 					}	
 
-					$pParamHash['secondary_store']['parent_id'] = $pParamHash['secondary_store']['content_id'];
-					$this->mContactId = $pParamHash['secondary_store']['content_id'];
-					$this->mParentId = $pParamHash['secondary_store']['parent_id'];
+					$pParamHash['contact_store']['parent_id'] = $pParamHash['contact_store']['content_id'];
+					$this->mContactId = $pParamHash['contact_store']['content_id'];
+					$this->mParentId = $pParamHash['contact_store']['parent_id'];
 					$this->mContentId = $pParamHash['content_id'];
-					$result = $this->mDb->associateInsert( $table, $pParamHash['secondary_store'] );
+					$result = $this->mDb->associateInsert( $table, $pParamHash['contact_store'] );
 				}
 				// load before completing transaction as firebird isolates results
 				$this->load();
 				$this->mDb->CompleteTrans();
 			} else {
 				$this->mDb->RollbackTrans();
+				$this->mErrors['store'] = 'Failed to store this contact.';
 			}
 		}
 		return( count( $this->mErrors ) == 0 );
@@ -257,50 +257,53 @@ class Contacts extends LibertyAttachable {
 	 * @param integer 
 	 * @return string Text for the title description
 	 */
-	function getList($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $add_sql = '') {
-		global $gBitSystem;
+	function getList( &$pListHash ) {
+		LibertyContent::prepGetList( $pListHash );
+		
+		$whereSql = $joinSql = $selectSql = '';
+		$bindVars = array();
+		array_push( $bindVars, $this->mContentTypeGuid );
+		$this->getServicesSql( 'content_list_sql_function', $selectSql, $joinSql, $whereSql, $bindVars );
 
-		if ($find) {
-			$findesc = '%' . strtoupper( $find ) . '%';
-			$mid = " WHERE (UPPER(b.`title`) like ? or UPPER(b.`description`) like ?) ";
-			$bindvars=array($findesc,$findesc);
-		} else {
-			$mid = '';
-			$bindvars=array();
+		if ( isset($pListHash['find']) ) {
+			$findesc = '%' . strtoupper( $pListHash['find'] ) . '%';
+			$whereSql .= " AND (UPPER(con.`SURNAME`) like ? or UPPER(con.`FORENAME`) like ?) ";
+			array_push( $bindVars, $findesc );
 		}
 
-		if ($add_sql) {
-			if (strlen($mid) > 1) {
-				$mid .= ' AND '.$add_sql.' ';
-			} else {
-				$mid = "WHERE $add_sql ";
-			}
+		if ( isset($pListHash['add_sql']) ) {
+			$whereSql .= " AND $add_sql ";
 		}
 
-		$query = "SELECT con.*, tc.*, 
+		$query = "SELECT con.*, lc.*, 
 				uue.`login` AS modifier_user, uue.`real_name` AS modifier_real_name,
-				uuc.`login` AS creator_user, uuc.`real_name` AS creator_real_name
-				FROM `".BIT_DB_PREFIX."contact` con
-				INNER JOIN `".BIT_DB_PREFIX."tiki_content` tc ON ( tc.`content_id` = con.`content_id` )
-				LEFT JOIN `".BIT_DB_PREFIX."users_users` uue ON (uue.`user_id` = tc.`modifier_user_id`)
-				LEFT JOIN `".BIT_DB_PREFIX."users_users` uuc ON (uuc.`user_id` = tc.`user_id`)
-				$mid order by ".$this->mDb->convert_sortmode($sort_mode);
-
-		$result = $this->mDb->query($query,$bindvars,$maxRecords,$offset);
+				uuc.`login` AS creator_user, uuc.`real_name` AS creator_real_name $selectSql
+				FROM `".BIT_DB_PREFIX."contact` con 
+				INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON ( lc.`content_id` = con.`content_id` )
+				LEFT JOIN `".BIT_DB_PREFIX."users_users` uue ON (uue.`user_id` = lc.`modifier_user_id`)
+				LEFT JOIN `".BIT_DB_PREFIX."users_users` uuc ON (uuc.`user_id` = lc.`user_id`)
+				$joinSql
+				WHERE lc.`content_type_guid`=? $whereSql  
+				order by ".$this->mDb->convertSortmode( $pListHash['sort_mode'] );
+		$query_cant = "SELECT COUNT(lc.`content_id`) FROM `".BIT_DB_PREFIX."contact` con
+				INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON ( lc.`content_id` = con.`content_id` )
+				$joinSql
+				WHERE lc.`content_type_guid`=? $whereSql";
 
 		$ret = array();
+		$this->mDb->StartTrans();
+		$result = $this->mDb->query( $query, $bindVars, $pListHash['max_records'], $pListHash['offset'] );
+		$cant = $this->mDb->getOne( $query_cant, $bindVars );
+		$this->mDb->CompleteTrans();
 
 		while ($res = $result->fetchRow()) {
-			$res['irlist_url'] = $this->getDisplayUrl( $res['content_id'] );
+			$res['contact_url'] = $this->getDisplayUrl( $res['content_id'] );
 			$ret[] = $res;
 		}
-		$retval = array();
-		$retval["data"] = $ret;
-		$query_cant = "SELECT COUNT(tc.`content_id`) FROM `".BIT_DB_PREFIX."contact` tc $mid";
 
-		$cant = $this->mDb->getOne($query_cant, $bindvars);
-		$retval["cant"] = $cant;
-		return $retval;
+		$pListHash['cant'] = $cant;
+		LibertyContent::postGetList( $pListHash );
+		return $ret;
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.6 2006/04/13 10:34:33 squareing Exp $
+ * $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.7 2007/06/04 17:44:12 lsces Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,19 +38,6 @@ if( !empty( $gContent->mInfo ) ) {
 	$formInfo['edit'] = !empty( $gContent->mInfo['data'] ) ? $gContent->mInfo['data'] : '';
 }
 
-if(isset($_REQUEST["edit"])) {
-	$formInfo['edit'] = $_REQUEST["edit"];
-}
-if(isset($_REQUEST['title'])) {
-	$formInfo['title'] = $_REQUEST['title'];
-}
-if(isset($_REQUEST["description"])) {
-	$formInfo['description'] = $_REQUEST["description"];
-}
-if (isset($_REQUEST["comment"])) {
-	$formInfo['comment'] = $_REQUEST["comment"];
-}
-
 $cat_type = BITPAGE_CONTENT_TYPE_GUID;
 if(isset($_REQUEST["preview"])) {
 
@@ -72,37 +59,7 @@ if(isset($_REQUEST["preview"])) {
 	$gContent->invokeServices( 'content_edit_function' );
 }
 
-function htmldecode($string) {
-   $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
-   $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
-   return $string;
-}
-
-function parse_output(&$obj, &$parts,$i) {
-	if( !empty( $obj->parts ) ) {
-		for($i=0; $i<count($obj->parts); $i++) {
-			parse_output($obj->parts[$i], $parts,$i);
-		}
-	} else {
-		$ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;
-		switch($ctype) {
-			case 'application/x-tikiwiki':
-				$aux["body"] = $obj->body;
-				$ccc=$obj->headers["content-type"];
-				$items = split(';',$ccc);
-				foreach($items as $item) {
-					$portions = split('=',$item);
-					if(isset($portions[0])&&isset($portions[1])) {
-						$aux[trim($portions[0])]=trim($portions[1]);
-					}
-				}
-				$parts[]=$aux;
-		}
-	}
-}
-
 // Pro
-// Check if the page has changed
 if (isset($_REQUEST["fCancel"])) {
 	if( !empty( $gContent->mContentId ) ) {
 		header("Location: ".$gContent->getDisplayUrl() );
@@ -110,38 +67,21 @@ if (isset($_REQUEST["fCancel"])) {
 		header("Location: ".CONTACTS_PKG_URL );
 	}
 	die;
-} elseif (isset($_REQUEST["fSavePage"])) {
-	// Check if all Request values are delivered, and if not, set them
-	// to avoid error messages. This can happen if some features are
-	// disabled
+} elseif (isset($_REQUEST["fSaveContact"])) {
 	if( $gContent->store( $_REQUEST ) ) {
 		if ( $gBitSystem->isFeatureActive( 'contact_watch_author' ) ) {
 			$gBitUser->storeWatch( "contact_entry_changed", $gContent->mContentId, $gContent->mContentTypeGuid, $_REQUEST['title'], $gContent->getDisplayUrl() );
-		}
+		} 
 		header("Location: ".$gContent->getDisplayUrl() );
 	} else {
 		$formInfo = $_REQUEST;
 		$formInfo['data'] = &$_REQUEST['edit'];
 	}
-} elseif( !empty( $_REQUEST['edit'] ) ) {
-	// perhaps we have a javascript non-saving form submit
-	$formInfo = $_REQUEST;
-	$formInfo['data'] = &$_REQUEST['edit'];
-}
-
+} 
 // Configure quicktags list
 if ($gBitSystem->isPackageActive( 'quicktags' ) ) {
 	include_once( QUICKTAGS_PKG_PATH.'quicktags_inc.php' );
 }
-
-if ($gBitSystem->isFeatureActive( 'theme_control' ) ) {
-	include( THEMES_PKG_PATH.'tc_inc.php' );
-}
-
-// Flag for 'page bar' that currently 'Edit' mode active
-// so no need to show comments & attachments, but need
-// to show 'wiki quick help'
-$gBitSmarty->assign('edit_page', 'y');
 
 // WYSIWYG and Quicktag variable
 $gBitSmarty->assign( 'textarea_id', 'editwiki' );
@@ -150,9 +90,9 @@ $gBitSmarty->assign( 'textarea_id', 'editwiki' );
 if( empty( $formInfo ) ) {
 	$formInfo = &$gContent->mInfo;
 }
-$formInfo['contact_type'] = $gContent->getContactsTypeList();
+$formInfo['contact_type_list'] = $gContent->getContactsTypeList();
+$gBitSmarty->assign_by_ref( 'contactInfo', $formInfo );
 
-$gBitSmarty->assign_by_ref( 'contentInfo', $formInfo );
 $gBitSmarty->assign_by_ref( 'errors', $gContent->mErrors );
 $gBitSmarty->assign( (!empty( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'body').'TabSelect', 'tdefault' );
 $gBitSmarty->assign('show_page_bar', 'y');

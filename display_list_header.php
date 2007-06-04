@@ -10,10 +10,5 @@
  * @subpackage functions
  */
 
-$contact_type = $gContent->getContactsTypeList();
-$gBitSmarty->assign_by_ref('contact_type', $contact_type);
-
-$gBitSmarty->assign_by_ref('listcontacts', $listcontacts["data"]);
-$section = 'contacts';
 
 ?>
