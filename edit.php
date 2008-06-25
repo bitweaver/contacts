@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.7 2007/06/04 17:44:12 lsces Exp $
+ * $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.8 2008/06/25 22:21:08 spiderr Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,5 +97,5 @@ $gBitSmarty->assign_by_ref( 'errors', $gContent->mErrors );
 $gBitSmarty->assign( (!empty( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'body').'TabSelect', 'tdefault' );
 $gBitSmarty->assign('show_page_bar', 'y');
 
-$gBitSystem->display( 'bitpackage:contacts/edit.tpl', 'Edit: ' );
+$gBitSystem->display( 'bitpackage:contacts/edit.tpl', 'Edit: ' , array( 'display_mode' => 'edit' ));
 ?>

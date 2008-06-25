@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_contacts/index.php,v 1.5 2007/06/04 17:44:18 lsces Exp $
+ * $Header: /cvsroot/bitweaver/_bit_contacts/index.php,v 1.6 2008/06/25 22:21:08 spiderr Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,7 +43,7 @@ $displayHash = array( 'perm_name' => 'bit_p_view' );
 $gBitSmarty->assign_by_ref( 'contactInfo', $gContent->mInfo );
 if ( $gContent->isValid() ) {
 	$gBitSystem->setBrowserTitle("Content List Item");
-	$gBitSystem->display( 'bitpackage:contacts/show_contact.tpl');
+	$gBitSystem->display( 'bitpackage:contacts/show_contact.tpl', NULL, array( 'display_mode' => 'display' ));
 } else {
 	header ("location: ".CONTACTS_PKG_URL."list.php");
 	die;

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_contacts/list_contacts.php,v 1.4 2007/06/04 17:44:17 lsces Exp $
+// $Header: /cvsroot/bitweaver/_bit_contacts/list_contacts.php,v 1.5 2008/06/25 22:21:08 spiderr Exp $
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,5 +26,5 @@ $smarty->assign_by_ref('list', $_REQUEST["data"]);
 
 
 // Display the template
-$gBitSystem->display( 'bitpackage:contacts/list_contacts.tpl');
+$gBitSystem->display( 'bitpackage:contacts/list_contacts.tpl', NULL, array( 'display_mode' => 'list' ));
 ?>

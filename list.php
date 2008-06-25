@@ -25,7 +25,7 @@ $gContent = new Contacts();
 /*
 if($feature_listContacts != 'y') {
   $gBitSmarty->assign('msg',tra("This feature is disabled"));
-  $gBitSystem->display( 'error.tpl' );
+  $gBitSystem->display( 'error.tpl' , NULL, array( 'display_mode' => 'list' ));
   die;
 }
 */
@@ -34,7 +34,7 @@ if($feature_listContacts != 'y') {
 // Now check permissions to access this page
 if(!$gBitUser->( 'contact_p_view' )) {
   $gBitSmarty->assign('msg',tra("Permission denied you cannot view contacts"));
-  $gBitSystem->display( 'error.tpl' );
+  $gBitSystem->display( 'error.tpl' , NULL, array( 'display_mode' => 'list' ));
   die;
 }
 */
@@ -54,6 +54,6 @@ $gBitSmarty->assign_by_ref( 'listInfo', $listHash['listInfo'] );
 
 $gBitSystem->setBrowserTitle("View Contacts List");
 // Display the template
-$gBitSystem->display( 'bitpackage:contacts/list.tpl');
+$gBitSystem->display( 'bitpackage:contacts/list.tpl', NULL, array( 'display_mode' => 'list' ));
 
 ?>
