@@ -1,7 +1,7 @@
 {* $Header$ *}
 
 <div class="floaticon">
-{if $bit_p_admin eq 'y'}
+{if $gContent->hasAdminPermission()}
   <a href="{$gBitLoc.CONTACTS_PKG_URL}admin/index.php"><img class="icon" src="{$gBitLoc.LIBERTY_PKG_URL}icons/config.gif"  alt="{tr}admin{/tr}" /></a>
 {/if}
 </div>
