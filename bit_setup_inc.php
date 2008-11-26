@@ -7,8 +7,6 @@ $registerHash = array(
 );
 $gBitSystem->registerPackage( $registerHash );
 
-define('CONTACTS_CONTENT_TYPE_GUID', 'contacts' );
-
 if( $gBitSystem->isPackageActive( 'contacts' ) ) {
 	$menuHash = array(
 		'package_name'  => CONTACTS_PKG_NAME,

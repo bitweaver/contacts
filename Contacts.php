@@ -14,6 +14,8 @@
  */
 require_once( LIBERTY_PKG_PATH.'LibertyAttachable.php' );		// Contact base class
 
+define('CONTACTS_CONTENT_TYPE_GUID', 'contacts' );
+
 /**
  * @package contacts
  */
