@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.4 2006/09/03 20:06:33 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.5 2008/12/24 07:14:32 lsces Exp $ *}
 <div class="floaticon">
-	{if $gBitUser->hasPermission('bit_p_contact_admin')}
+	{if $gBitUser->hasPermission('p_contacts_admin')}
 		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{biticon ipackage="icons" iname="document-properties" iexplain="configure"}</a>
 	{/if}
 	{bithelp}
@@ -30,9 +30,9 @@
 <input type="hidden" name="sort_mode" value="{$listInfo.sort_mode|escape}" />
 <table class="data">
 <tr>
-{*  at the moment, the only working option to use the checkboxes for is deleting pages. so for now the checkboxes are visible iff $bit_p_remove is set. Other applications make sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here: *}
+{*  at the moment, the only working option to use the checkboxes for is deleting pages. so for now the checkboxes are visible iff $p_contacts_delete is set. Other applications make sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here: *}
 
-{if $gBitUser->hasPermission('bit_p_remove_contact')}              {* ... "or $bit_p_other_sufficient_condition_for_checkboxes eq 'y'"  *}
+{if $gBitUser->hasPermission('p_contacts_delete')}              {* ... "or $p_contacts_other_sufficient_condition_for_checkboxes eq 'y'"  *}
   {assign var='checkboxes_on' value='y'}
 {else}
   {assign var='checkboxes_on' value='n'}
@@ -59,7 +59,7 @@
 {/if}
 {if $contact_list_content_id eq 'y'}
 	<td><a href="{$gBitLoc.CONTACTS_PKG_URL}index.php?content_id={$list[changes].content_id|escape:"url"}" title="{$list[changes].content_id}">{$list[changes].content_id|truncate:20:"...":true}</a>
-		{if $gBitUser->hasPermission('bit_p_edit_contact')}
+		{if $gBitUser->hasPermission('p_contacts_update')}
 			<br />(<a href="{$gBitLoc.CONTACTS_PKG_URL}edit.php?content_id={$list[changes].content_id|escape:"url"}">{tr}edit{/tr}</a>)
 		{/if}
 	</td>
@@ -98,7 +98,7 @@
 {if $checkboxes_on eq 'y'} {* what happens to the checked items *}
   <select name="submit_mult" onchange="this.form.submit();">
     <option value="" selected="selected">{tr}with checked{/tr}:</option>
-    {if $gBitUser->hasPermission('bit_p_remove_contact')}
+    {if $gBitUser->hasPermission('p_contacts_delete')}
       <option value="remove_contacts">{tr}remove{/tr}</option>
     {/if}
     {* add here e.g. <option value="categorize">{tr}categorize{/tr}</option> *}

@@ -12,14 +12,12 @@
 /**
  * required setup
  */
-require_once( LIBERTY_PKG_PATH.'LibertyAttachable.php' );		// Contact base class
-
-define('CONTACTS_CONTENT_TYPE_GUID', 'contacts' );
+require_once( LIBERTY_PKG_PATH.'LibertyContent.php' );		// Contact base class
 
 /**
  * @package contacts
  */
-class Contacts extends LibertyAttachable {
+class Contacts extends LibertyContent {
 	var $mContactId;
 	var $mParentId;
 
@@ -43,6 +41,12 @@ class Contacts extends LibertyAttachable {
 		$this->mContactId = (int)$pContactId;
 		$this->mContentId = (int)$pContentId;
 		$this->mContentTypeGuid = CONTACTS_CONTENT_TYPE_GUID;
+
+		// Permission setup
+		$this->mViewContentPerm  = 'p_contacts_view';
+		$this->mCreateContentPerm  = 'p_contacts_create';
+		$this->mUpdateContentPerm  = 'p_contacts_update';
+		$this->mAdminContentPerm = 'p_contacts_admin';
 	}
 
 	/**
@@ -136,7 +140,7 @@ class Contacts extends LibertyAttachable {
 			// Start a transaction wrapping the whole insert into liberty 
 
 			$this->mDb->StartTrans();
-			if ( LibertyAttachable::store( $pParamHash ) ) {
+			if ( LibertyContent::store( $pParamHash ) ) {
 				$table = BIT_DB_PREFIX."contact";
 
 				// mContentId will not be set until the secondary data has commited 

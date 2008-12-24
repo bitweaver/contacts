@@ -4,12 +4,12 @@
   {/if}
   {if $print_page ne 'y'}
     {if !$lock}
-      {if $gBitUser->hasPermission('bit_p_edit_contact')}
+      {if $gBitUser->hasPermission('p_contacts_update')}
 		<a href="edit.php?content_id={$contactInfo.content_id}" {if $beingEdited eq 'y'}{popup_init src="`$gBitLoc.THEMES_PKG_URL`overlib.js"}{popup text="$semUser" width="-1"}{/if}>{biticon ipackage="icons" iname="accessories-text-editor" iexplain="edit"}</a>
       {/if}
     {/if}
     <a title="{tr}print{/tr}" href="print.php?content_id={$contactInfo.content_id}">{biticon ipackage="icons" iname="document-print" iexplain="print"}</a>
-      {if $gBitUser->hasPermission('bit_p_remove_contact')}
+      {if $gBitUser->hasPermission('p_contacts_delete')}
         <a title="{tr}remove this page{/tr}" href="remove_contact.php?content_id={$contactInfo.content_id}">{biticon ipackage="icons" iname="edit-delete" iexplain="delete"}</a>
       {/if}
   {/if} {* end print_page *}

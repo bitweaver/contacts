@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_contacts/list_contacts.php,v 1.5 2008/06/25 22:21:08 spiderr Exp $
+// $Header: /cvsroot/bitweaver/_bit_contacts/list_contacts.php,v 1.6 2008/12/24 07:14:31 lsces Exp $
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -10,9 +10,9 @@ require_once( CONTACTS_PKG_PATH.'Contacts.php' );
 $gBitSystem->isPackageActive('contacts', TRUE);
 
 // Now check permissions to access this page
-$gBitSystem->verifyPermission('bit_p_read_contacts');
+$gBitSystem->verifyPermission('p_contacts_view');
 
-$contact = new BitContacts( 0 );
+$contact = new Contacts( 0 );
 
 if ( empty( $_REQUEST["sort_mode"] ) ) {
 	$sort_mode = 'title_asc';

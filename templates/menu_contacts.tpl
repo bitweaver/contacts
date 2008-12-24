@@ -1,10 +1,10 @@
 {strip}
 <ul>
 	<li><a class="item" href="{$smarty.const.CONTACTS_PKG_URL}list.php">{tr}List Contacts{/tr}</a></li>
-	{if $gBitUser->isAdmin() or $gBitUser->hasPermission( 'bit_p_edit_irlist' ) }
+	{if $gBitUser->isAdmin() or $gBitUser->hasPermission( 'p_contacts_update' ) }
 		<li><a class="item" href="{$smarty.const.CONTACTS_PKG_URL}edit.php">{biticon ipackage="icons" iname="document-new" iexplain="create contact" iforce="icon"} {tr}Create/Edit a Contact{/tr}</a></li>
 	{/if}
-	{if $gBitUser->hasPermission('bit_p_contact_admin')}
+	{if $gBitUser->hasPermission('p_contacts_admin')}
 		<li><a class="item" href="{$smarty.const.KERNEL_PKG_URL}admin/index.php?page=contacts">{tr}Admin contacts{/tr}</a></li>
 	{/if}
 </ul>

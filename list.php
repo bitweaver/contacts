@@ -19,7 +19,7 @@ include_once( CONTACTS_PKG_PATH.'Contacts.php' );
 
 $gBitSystem->verifyPackage( 'contacts' );
 
-$gBitSystem->verifyPermission( 'bit_p_read_contacts' );
+$gBitSystem->verifyPermission( 'p_contacts_view' );
 
 $gContent = new Contacts();
 /*

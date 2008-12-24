@@ -7,13 +7,17 @@ $registerHash = array(
 );
 $gBitSystem->registerPackage( $registerHash );
 
+define('CONTACTS_CONTENT_TYPE_GUID', 'contacts' );
+
 if( $gBitSystem->isPackageActive( 'contacts' ) ) {
-	$menuHash = array(
-		'package_name'  => CONTACTS_PKG_NAME,
-		'index_url'     => CONTACTS_PKG_URL.'index.php',
-		'menu_template' => 'bitpackage:contacts/menu_contacts.tpl',
-	);
-	$gBitSystem->registerAppMenu( $menuHash );
+	if( $gBitUser->hasPermission( 'p_contacts_view' ) ) {
+		$menuHash = array(
+			'package_name'  => CONTACTS_PKG_NAME,
+			'index_url'     => CONTACTS_PKG_URL.'index.php',
+			'menu_template' => 'bitpackage:contacts/menu_contacts.tpl',
+		);
+		$gBitSystem->registerAppMenu( $menuHash );
+	}
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_contacts/index.php,v 1.6 2008/06/25 22:21:08 spiderr Exp $
+ * $Header: /cvsroot/bitweaver/_bit_contacts/index.php,v 1.7 2008/12/24 07:14:31 lsces Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,7 @@ if( $gBitSystem->isFeatureActive( 'feature_contacts_comments' ) ) {
 	include_once( LIBERTY_PKG_PATH.'comments_inc.php' );
 }
 
-$displayHash = array( 'perm_name' => 'bit_p_view' );
+$displayHash = array( 'perm_name' => 'p_contacts_view' );
 //$gContent->invokeServices( 'content_display_function', $displayHash );
 
 //$pdata = $gContent->parseData();

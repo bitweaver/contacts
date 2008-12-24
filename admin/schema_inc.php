@@ -95,10 +95,11 @@ $gBitInstaller->registerSchemaSequences( CONTACTS_PKG_NAME, $sequences );
 
 // ### Default User Permissions
 $gBitInstaller->registerUserPermissions( CONTACTS_PKG_NAME, array(
-	array('bit_p_view_contact', 'Can browse the Contacts List', 'basic', CONTACTS_PKG_NAME),
-	array('bit_p_edit_contact', 'Can edit the Contacts List', 'registered', CONTACTS_PKG_NAME),
-	array('bit_p_contacts_admin', 'Can admin Contacts List', 'admin', CONTACTS_PKG_NAME),
-	array('bit_p_remove_contact', 'Can remove a Contact entry', 'editors', CONTACTS_PKG_NAME)
+	array('p_contacts_view', 'Can browse the Contacts List', 'basic', CONTACTS_PKG_NAME),
+	array('p_contacts_update', 'Can edit the Contacts List', 'registered', CONTACTS_PKG_NAME),
+	array('p_contacts_create', 'Can create a Contacts List entry', 'editors', CONTACTS_PKG_NAME),
+	array('p_contacts_admin', 'Can admin Contacts List', 'admin', CONTACTS_PKG_NAME),
+	array('p_contacts_delete', 'Can remove a Contact entry', 'editors', CONTACTS_PKG_NAME)
 ) );
 
 // ### Default Preferences
