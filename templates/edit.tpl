@@ -164,13 +164,13 @@
 				{jstab title="Liberty Extensions"}
 					{if $serviceEditTpls.categorization }
 						{legend legend="Categorize"}
-							{include file=$serviceEditTpls.categorization"}
+							{include file=$serviceEditTpls.categorization}
 						{/legend}
 					{/if}
 				{/jstab}
 			{/jstabs}
 
-			{include file="bitpackage:liberty/edit_services_inc.tpl serviceFile=content_edit_mini_tpl}
+			{include file="bitpackage:liberty/edit_services_inc.tpl" serviceFile="content_edit_mini_tpl"}
 
 			<div class="row submit">
 				<input type="submit" name="fCancel" value="{tr}Cancel{/tr}" />&nbsp;
