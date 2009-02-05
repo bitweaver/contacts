@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.5 2008/12/24 07:14:32 lsces Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.6 2009/02/05 19:53:18 lsces Exp $ *}
 <div class="floaticon">
 	{if $gBitUser->hasPermission('p_contacts_admin')}
 		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{biticon ipackage="icons" iname="document-properties" iexplain="configure"}</a>
@@ -116,6 +116,6 @@
 
 </div><!-- end .body -->
 
-{pagination_c}
+{libertypagination}
 
 </div> {* end .admin *}
