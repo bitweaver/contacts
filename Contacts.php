@@ -318,7 +318,7 @@ class Contacts extends LibertyContent {
 	* @return array List of contact type names from the contact mamanger in alphabetical order
 	*/
 	function getContactsTypeList() {
-		$query = "SELECT `type_name` FROM `contact_type`
+		$query = "SELECT `type_name` FROM `".BIT_DB_PREFIX."contact_type`
 				  ORDER BY `type_name`";
 		$result = $this->mDb->query($query);
 		$ret = array();
