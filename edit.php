@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.10 2009/10/01 14:16:59 wjames5 Exp $
+ * $Header: /cvsroot/bitweaver/_bit_contacts/edit.php,v 1.11 2010/02/08 21:27:22 wjames5 Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See below for details and a complete list of authors.
@@ -13,7 +13,7 @@
 /**
  * required setup
  */
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 //include_once( LIBERTY_PKG_PATH.'edit_help_inc.php' );
 include_once( CONTACTS_PKG_PATH.'Contacts.php' );
