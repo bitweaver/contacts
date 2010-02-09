@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.6 2009/02/05 19:53:18 lsces Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.7 2010/02/09 17:21:21 wjames5 Exp $ *}
 <div class="floaticon">
 	{if $gBitUser->hasPermission('p_contacts_admin')}
 		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{biticon ipackage="icons" iname="document-properties" iexplain="configure"}</a>
@@ -87,7 +87,7 @@
   <!--
   // check / uncheck all.
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
-  document.write("<tr><td><input name=\"switcher\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form.id,'checked[]','switcher')\" /></td>");
+  document.write("<tr><td><input name=\"switcher\" type=\"checkbox\" onclick=\"BitBase.switchCheckboxes(this.form.id,'checked[]','switcher')\" /></td>");
   document.write("<td colspan=\"15\">{tr}All{/tr}</td></tr>");
   //-->
   </script>
