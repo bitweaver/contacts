@@ -7,7 +7,7 @@
 	<div class="header">
 		<h1>
 		{* this weird dual assign thing is cause smarty wont interpret backticks to object in assign tag - spiderr *}
-		{assign var=conDescr value=$gContent->mType.content_description}
+		{assign var=conDescr value=$gContent->getContentTypeName()}
 		{if $contactInfo.content_id}
 			{assign var=editLabel value="{tr}Edit{/tr} $conDescr"}
 			{tr}{tr}Edit{/tr} {$contactInfo.title}{/tr}
