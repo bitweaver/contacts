@@ -32,7 +32,7 @@ class Contacts extends LibertyContent {
 		LibertyContent::LibertyContent();
 		$this->registerContentType( CONTACTS_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => CONTACTS_CONTENT_TYPE_GUID,
-				'content_description' => 'Contact Entry',
+				'content_name' => 'Contact Entry',
 				'handler_class' => 'Contacts',
 				'handler_package' => 'contacts',
 				'handler_file' => 'Contacts.php',
@@ -249,8 +249,8 @@ class Contacts extends LibertyContent {
 
 		if( !empty( $pHash['title'] ) ) {
 			$ret = "Contact - ".$this->mInfo['title'];
-		} elseif( !empty( $pHash['content_description'] ) ) {
-			$ret = $pHash['content_description'];
+		} elseif( !empty( $pHash['content_name'] ) ) {
+			$ret = $pHash['content_name'];
 		}
 		return $ret;
 	}
