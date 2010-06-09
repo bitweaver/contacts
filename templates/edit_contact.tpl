@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/edit_contact.tpl,v 1.1 2005/07/06 10:41:50 bitweaver Exp $ *}
+{* $Header$ *}
 {popup_init src="`$gBitLoc.THEMES_PKG_URL`overlib.js"}
 {strip}
 <div class="floaticon">{bithelp}</div>

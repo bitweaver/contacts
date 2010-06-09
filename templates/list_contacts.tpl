@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_contacts/templates/list_contacts.tpl,v 1.7 2010/02/09 17:21:21 wjames5 Exp $ *}
+{* $Header$ *}
 <div class="floaticon">
 	{if $gBitUser->hasPermission('p_contacts_admin')}
 		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{biticon ipackage="icons" iname="document-properties" iexplain="configure"}</a>
