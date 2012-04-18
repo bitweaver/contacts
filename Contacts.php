@@ -203,13 +203,11 @@ class Contacts extends LibertyContent {
 	 * @param array different possibilities depending on derived class
 	 * @return string the link to display the page.
 	 */
-	function getDisplayUrl( $pContentId=NULL ) {
+	function getDisplayUrlFromHash( $pParamHash ) {
 		global $gBitSystem;
-		if( empty( $pContentId ) ) {
-			$pContentId = $this->mContentId;
+		if( !empty( $pParamHash['content_id'] ) ) {
+			return CONTACTS_PKG_URL.'index.php?content_id='.$pParamHash['content_id'];
 		}
-
-		return CONTACTS_PKG_URL.'index.php?content_id='.$pContentId;
 	}
 
 	/**
@@ -223,9 +221,9 @@ class Contacts extends LibertyContent {
 		if ( $this->mContentId != $aux['content_id'] ) $this->load($aux['content_id']);
 
 		if (empty($this->mInfo['content_id']) ) {
-			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'.$aux['title'].'</a>';
+			$ret = '<a href="'.$this->getDisplayUrlFromHash( $aux ).'">'.$aux['title'].'</a>';
 		} else {
-			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'."Contact - ".$this->mInfo['title'].'</a>';
+			$ret = '<a href="'.$this->getDisplayUrl().'">'."Contact - ".$this->getTitle().'</a>';
 		}
 		return $ret;
 	}
@@ -303,7 +301,7 @@ class Contacts extends LibertyContent {
 		$this->mDb->CompleteTrans();
 
 		while ($res = $result->fetchRow()) {
-			$res['contact_url'] = $this->getDisplayUrl( $res['content_id'] );
+			$res['contact_url'] = $this->getDisplayUrl( $res );
 			$ret[] = $res;
 		}
 
