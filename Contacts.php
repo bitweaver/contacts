@@ -203,7 +203,7 @@ class Contacts extends LibertyContent {
 	 * @param array different possibilities depending on derived class
 	 * @return string the link to display the page.
 	 */
-	function getDisplayUrlFromHash( $pParamHash ) {
+	public static function getDisplayUrlFromHash( $pParamHash ) {
 		global $gBitSystem;
 		if( !empty( $pParamHash['content_id'] ) ) {
 			return CONTACTS_PKG_URL.'index.php?content_id='.$pParamHash['content_id'];
