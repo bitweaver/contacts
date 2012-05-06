@@ -29,7 +29,7 @@ class Contacts extends LibertyContent {
 	 * @param integer Base content_id identifier 
 	 */
 	function Contacts( $pContactId = NULL, $pContentId = NULL ) {
-		LibertyContent::LibertyContent();
+		parent::__construct();
 		$this->registerContentType( CONTACTS_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => CONTACTS_CONTENT_TYPE_GUID,
 				'content_name' => 'Contact Entry',

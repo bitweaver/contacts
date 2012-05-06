@@ -21,7 +21,7 @@ class Address extends LibertyContent {
 		var $mAddressId;
 
 	function Address( $pAddressId ) {
-	LibertyContent::LibertyContent();
+	parent::__construct();
 		if( is_numeric( $pAddressId ) ) {
 			$this->mAddressId = $pAddressId;
 		}
