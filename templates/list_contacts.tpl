@@ -25,7 +25,7 @@
 </tr>
 </table>
 
-<form id="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+<form id="checkform" method="post" action="{$smarty.server.SCRIPT_NAME}">
 <input type="hidden" name="offset" value="{$listInfo.offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$listInfo.sort_mode|escape}" />
 <table class="data">
