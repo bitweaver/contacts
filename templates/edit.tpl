@@ -36,7 +36,7 @@
 					{legend legend="`$editLabel` Body"}
 						<input type="hidden" name="content_id" value="{$contactInfo.content_id}" />
 						
-						<div class="row">
+						<div class="control-group">
 							{formfeedback warning=`$errors.names`}
 							{formfeedback warning=`$errors.store`}
 
@@ -57,77 +57,77 @@
 							{/forminput}
 							
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="$conDescr Title" for="title"}
 							{forminput}
 								<input type="text" size="10" maxlength="10" name="ctitle" id="ctitle" value="{$contactInfo.ctitle}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="Forename" for="forename"}
 							{forminput}
 								<input size="60" type="text" name="forename" id="forename" value="{$contactInfo.forename|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="Surname" for="surname"}
 							{forminput}
 								<input size="60" type="text" name="surname" id="surname" value="{$contactInfo.surname|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="Home Phone" for="home_phone"}
 							{forminput}
 								<input size="30" type="text" name="home_phone" id="home_phone" value="{$contactInfo.home_phone|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="Mobile Phone" for="mobile_phone"}
 							{forminput}
 								<input size="30" type="text" name="mobile_phone" id="mobile_phone" value="{$contactInfo.mobile_phone|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="eMail Address" for="email_address"}
 							{forminput}
 								<input size="60" type="text" name="email_address" id="email_address" value="{$contactInfo.email_address|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="Address" for="address1"}
 							{forminput}
 								<input size="60" type="text" name="address1" id="address1" value="{$contactInfo.address1|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{forminput}
 								<input size="60" type="text" name="address2" id="address2" value="{$contactInfo.address2|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{forminput}
 								<input size="60" type="text" name="address3" id="address3" value="{$contactInfo.address3|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="Town" for="town"}
 							{forminput}
 								<input size="30" type="text" name="town" id="town" value="{$contactInfo.town|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="County" for="county"}
 							{forminput}
 								<input size="30" type="text" name="county" id="county" value="{$contactInfo.county|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="Postcode" for="postcode"}
 							{forminput}
 								<input size="30" type="text" name="postcode" id="postcode" value="{$contactInfo.postcode|escape}" />
 							{/forminput}
 						</div>
-						<div class="row">
+						<div class="control-group">
 							{formlabel label="Note" for="description"}
 							{forminput}
 								<input size="60" type="text" name="description" id="description" value="{$contactInfo.description|escape}" />
@@ -142,14 +142,14 @@
 							{include file="bitpackage:quicktags/quicktags_full.tpl"}
 						{/if}
 
-						<div class="row">
+						<div class="control-group">
 							{forminput}
 								<textarea id="{$textarea_id}" name="edit" rows="{$rows|default:20}" cols="{$cols|default:80}">{$contactInfo.data|escape:html}</textarea>
 							{/forminput}
 						</div>
 
 						{if $page ne 'SandBox'}
-							<div class="row">
+							<div class="control-group">
 								{formlabel label="Comment" for="comment"}
 								{forminput}
 									<input size="50" type="text" name="comment" id="comment" value="{$contactInfo.comment}" />
@@ -172,7 +172,7 @@
 
 			{include file="bitpackage:liberty/edit_services_inc.tpl" serviceFile="content_edit_mini_tpl"}
 
-			<div class="row submit">
+			<div class="control-group submit">
 				<input type="submit" name="fCancel" value="{tr}Cancel{/tr}" />&nbsp;
 				<input type="submit" name="fSaveContact" value="{tr}Save{/tr}" />
 			</div>
