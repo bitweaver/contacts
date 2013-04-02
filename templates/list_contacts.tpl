@@ -1,7 +1,7 @@
 {* $Header$ *}
 <div class="floaticon">
 	{if $gBitUser->hasPermission('p_contacts_admin')}
-		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{biticon ipackage="icons" iname="document-properties" iexplain="configure"}</a>
+		<a title="{tr}configure listing{/tr}" href="{$gBitLoc.KERNEL_PKG_URL}admin/index.php?page=contacts">{booticon iname="icon-file"  ipackage="icons"  iexplain="configure"}</a>
 	{/if}
 	{bithelp}
 </div>

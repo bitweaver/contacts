@@ -13,7 +13,7 @@
 
 		<div class="navbar">
 			<ul>
-				<li>{biticon ipackage="icons" iname="emblem-symbolic-link" iexplain="sort by"}</li>
+				<li>{booticon iname="icon-circle-arrow-right"  ipackage="icons"  iexplain="sort by"}</li>
 				{if $gBitSystem->isFeatureActive( 'contacts_list_id' ) }
 					<li>{smartlink ititle="Contact Number" isort="content_id" idefault=1 iorder=desc offset=$offset ihash=$ihash}</li>
 				{/if}
