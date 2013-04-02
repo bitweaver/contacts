@@ -43,11 +43,11 @@
 				<li class="item {cycle values='odd,even'}">
 					<div class="floaticon">
 						{if ($gBitUser->mUserId and $listcontacts[content].user_id eq $gBitUser->mUserId) or ($listcontacts[content].public eq 'y')}
-							<a title="{tr}edit{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}edit.php?content_id={$listcontacts[content].content_id}">{biticon ipackage="icons" iname="accessories-text-editor" iexplain="edit"}</a>
+							<a title="{tr}edit{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}edit.php?content_id={$listcontacts[content].content_id}">{booticon iname="icon-edit" ipackage="icons" iexplain="edit"}</a>
 						{/if}
 						{if ($gBitUser->mUserId and $listcontacts[content].user_id eq $gBitUser->mUserId)}
 							{if ($gBitUser->isAdmin()) or ($listcontacts[content].individual eq 'n')}
-								<a title="{tr}remove{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}list.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listcontacts[content].content_id}">{biticon ipackage="icons" iname="edit-delete" iexplain="delete"}</a>
+								<a title="{tr}remove{/tr}" href="{$smarty.const.CONTACTS_PKG_URL}list.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listcontacts[content].content_id}">{booticon iname="icon-trash" ipackage="icons" iexplain="delete"}</a>
 							{/if}
 						{/if}
 					</div>
