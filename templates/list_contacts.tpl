@@ -18,7 +18,7 @@
    <td>
    <form method="get" action="{$gBitLoc.CONTACTS_PKG_URL}list_contacts.php">
      <input type="text" name="find" value="{$listInfo.find|escape}" />
-     <input type="submit" name="search" value="{tr}find{/tr}" />
+     <input type="submit" class="btn" name="search" value="{tr}find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$listInfo.sort_mode|escape}" />
    </form>
    </td>
@@ -109,7 +109,7 @@
   //-->
   </script>
   <noscript>
-    <input type="submit" value="{tr}ok{/tr}" />
+    <input type="submit" class="btn" value="{tr}ok{/tr}" />
   </noscript>
 {/if}
 </form>

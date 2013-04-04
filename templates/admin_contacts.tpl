@@ -13,7 +13,7 @@
 	{/foreach}
 
 	<div class="control-group submit">
-		<input type="submit" name="contactlistfeatures" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn" name="contactlistfeatures" value="{tr}Change preferences{/tr}" />
 	</div>
 {/form}
 
