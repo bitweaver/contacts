@@ -25,7 +25,7 @@
 				alert( "{$errors.edit_conflict|strip_tags}" );
 			-->
 		</script>
-		{formfeedback warning=`$errors.edit_conflict`}
+		{formfeedback warning=$errors.edit_conflict}
 	{/if}
 
 	{strip}
@@ -37,8 +37,8 @@
 						<input type="hidden" name="content_id" value="{$contactInfo.content_id}" />
 						
 						<div class="control-group">
-							{formfeedback warning=`$errors.names`}
-							{formfeedback warning=`$errors.store`}
+							{formfeedback warning=$errors.names}
+							{formfeedback warning=$errors.store}
 
 							{formlabel label="$conDescr Contact" for="contentno"}
 							{if !$contactInfo.contact_id}
