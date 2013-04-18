@@ -1,5 +1,5 @@
 {strip}
-<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {tr}{$packageMenuTitle}{/tr} <b class="caret"></b></a>
+{if $packageMenuTitle}<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {tr}{$packageMenuTitle}{/tr} <b class="caret"></b></a>{/if}
 <ul class="{$packageMenuClass}">
 	<li><a class="item" href="{$smarty.const.CONTACTS_PKG_URL}list.php">{tr}List Contacts{/tr}</a></li>
 	{if $gBitUser->isAdmin() or $gBitUser->hasPermission( 'p_contacts_update' ) }
