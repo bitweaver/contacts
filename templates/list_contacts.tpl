@@ -28,7 +28,7 @@
 <form id="checkform" method="post" action="{$smarty.server.SCRIPT_NAME}">
 <input type="hidden" name="offset" value="{$listInfo.offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$listInfo.sort_mode|escape}" />
-<table class="data">
+<table class="table data">
 <tr>
 {*  at the moment, the only working option to use the checkboxes for is deleting pages. so for now the checkboxes are visible iff $p_contacts_delete is set. Other applications make sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here: *}
 
