@@ -116,9 +116,9 @@
 			</div>
 
 			<div class="control-group submit">
-				<input type="submit" class="btn" name="preview" value="{tr}Preview{/tr}" /> 
-				<input type="submit" class="btn" name="fSavePage" value="{tr}Save{/tr}" />&nbsp;
-				<input type="submit" class="btn" name="cancel" value="{tr}Cancel{/tr}" />
+				<input type="submit" class="btn btn-default" name="preview" value="{tr}Preview{/tr}" /> 
+				<input type="submit" class="btn btn-default" name="fSavePage" value="{tr}Save{/tr}" />&nbsp;
+				<input type="submit" class="btn btn-default" name="cancel" value="{tr}Cancel{/tr}" />
 			</div>
 		{/form}
 
