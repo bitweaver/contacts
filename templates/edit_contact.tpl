@@ -35,78 +35,78 @@
 		{form legend="Edit/Create Contact Record" enctype="multipart/form-data" id="editpageform"}
 			<input type="hidden" name="content_id" value="{$contactInfo.content_id}" />
 
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Forename" for="forename"}
 				{forminput}
 					<input size="60" type="text" name="forename" id="forename" value="{$contactInfo.forename|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Surname" for="surname"}
 				{forminput}
 					<input size="60" type="text" name="surname" id="surname" value="{$contactInfo.surname|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Home Phone" for="home_phone"}
 				{forminput}
 					<input size="30" type="text" name="home_phone" id="home_phone" value="{$contactInfo.home_phone|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Mobile Phone" for="mobile_phone"}
 				{forminput}
 					<input size="30" type="text" name="mobile_phone" id="mobile_phone" value="{$contactInfo.mobile_phone|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="eMail Address" for="email_address"}
 				{forminput}
 					<input size="60" type="text" name="email_address" id="email_address" value="{$contactInfo.email_address|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Address" for="address1"}
 				{forminput}
 					<input size="60" type="text" name="address1" id="address1" value="{$contactInfo.address1|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{forminput}
 					<input size="60" type="text" name="address2" id="address2" value="{$contactInfo.address2|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{forminput}
 					<input size="60" type="text" name="address3" id="address3" value="{$contactInfo.address3|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Town" for="town"}
 				{forminput}
 					<input size="30" type="text" name="town" id="town" value="{$contactInfo.town|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="County" for="county"}
 				{forminput}
 					<input size="30" type="text" name="county" id="county" value="{$contactInfo.county|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Postcode" for="postcode"}
 				{forminput}
 					<input size="30" type="text" name="postcode" id="postcode" value="{$contactInfo.postcode|escape}" />
 				{/forminput}
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Note" for="description"}
 				{forminput}
 					<input size="60" type="text" name="description" id="description" value="{$contactInfo.description|escape}" />
 				{/forminput}
 			</div>
 
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Memo" for="$textarea_id"}
 				{forminput}
 					<input type="hidden" name="rows" value="{$rows}" />
@@ -115,7 +115,7 @@
 				{/forminput}
 			</div>
 
-			<div class="control-group submit">
+			<div class="form-group submit">
 				<input type="submit" class="btn btn-default" name="preview" value="{tr}Preview{/tr}" /> 
 				<input type="submit" class="btn btn-default" name="fSavePage" value="{tr}Save{/tr}" />&nbsp;
 				<input type="submit" class="btn btn-default" name="cancel" value="{tr}Cancel{/tr}" />
