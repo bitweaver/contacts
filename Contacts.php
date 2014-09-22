@@ -234,19 +234,11 @@ class Contacts extends LibertyContent {
 	 * @param array mInfo style array of content information
 	 * @return string Text for the title description
 	 */
-	function getTitle( $pHash = NULL ) {
+	function getTitleFromHash( $pHash = NULL ) {
 		$ret = NULL;
-		if( empty( $pHash ) ) {
-			$pHash = &$this->mInfo;
-		} else {
-			if ( $this->mContentId != $pHash['content_id'] ) {
-				$this->load($pHash['content_id']);
-				$pHash = &$this->mInfo;
-			}
-		}
 
 		if( !empty( $pHash['title'] ) ) {
-			$ret = "Contact - ".$this->mInfo['title'];
+			$ret = "Contact - ".$pHash['title'];
 		} elseif( !empty( $pHash['content_name'] ) ) {
 			$ret = $pHash['content_name'];
 		}
